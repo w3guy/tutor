@@ -1,14 +1,14 @@
 <?php
 	extract( $data ); // $media_heading, $media_id, $input_name, $media_url
 
-	if ( empty( $media_url ) ) {
-		$media_url = wp_get_attachment_url( $media_id );
-	}
+if ( empty( $media_url ) ) {
+	$media_url = wp_get_attachment_url( $media_id );
+}
 
 	$is_borderless = isset( $data['borderless'] ) && $data['borderless'] == true;
 	$placeholder   = ! empty( $data['placeholder'] ) ? $data['placeholder'] : '';
-	$background    = ! empty( $data['background']) ? $data['background'] : '#eff1f7';
-	$border_color  = ! empty( $data['border']) ? $data['border'] : '#eff1f7';
+	$background    = ! empty( $data['background'] ) ? $data['background'] : '#eff1f7';
+	$border_color  = ! empty( $data['border'] ) ? $data['border'] : '#eff1f7';
 ?>
 <div class="tutor-thumbnail-uploader tutor-mt-12" data-media-heading="<?php echo ! empty( $media_heading ) ? $media_heading : __( 'Select or Upload Media Of Your Chosen Persuasion', 'tutor' ); ?>" data-button-text="<?php echo ! empty( $button_text ) ? $button_text : __( 'Use this media', 'tutor' ); ?>">
 	<div class="thumbnail-wrapper tutor-d-flex tutor-align-center <?php echo $is_borderless ? 'tutor-is-borderless' : 'tutor-p-16'; ?>">
@@ -21,15 +21,15 @@
 		<div class="thumbnail-input">
 			<div class="tutor-fs-6 tutor-color-secondary">
 			<?php
-				if ( isset($data['desc']['file_size']) ) {
-					printf( __( 'Size: <span class="tutor-fs-7 tutor-fw-medium">%s</span>', 'tutor' ), esc_attr( $data['desc']['file_size'] ) );
-				} else {
-					printf( __( 'Size: <span class="tutor-fs-7 tutor-fw-medium">%s</span>', 'tutor' ), '700x430 pixels' );
-				}
-				?>
+			if ( isset( $data['desc']['file_size'] ) ) {
+				printf( __( 'Size: <span class="tutor-fs-7 tutor-fw-medium">%s</span>', 'tutor' ), esc_attr( $data['desc']['file_size'] ) );
+			} else {
+				printf( __( 'Size: <span class="tutor-fs-7 tutor-fw-medium">%s</span>', 'tutor' ), '700x430 pixels' );
+			}
+			?>
 				<br />
 				<?php
-				if ( isset($data['desc']['file_support']) ) {
+				if ( isset( $data['desc']['file_support'] ) ) {
 					printf( __( 'File Support: <span class="tutor-fs-7 tutor-fw-medium">%s</span>', 'tutor' ), esc_attr( $data['desc']['file_support'] ) );
 				} else {
 					printf( __( 'File Support: <span class="tutor-fs-7 tutor-fw-medium">%s</span>', 'tutor' ), 'jpg, .jpeg,. gif, or .png.' );

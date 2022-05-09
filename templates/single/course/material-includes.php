@@ -24,10 +24,10 @@ if ( is_array( $materials ) && count( $materials ) ) {
 	?>
 	<div class="tutor-course-details-widget tutor-mt-40">
 		<h3 class="tutor-course-details-widget-title tutor-fs-5 tutor-mb-16">
-			<?php _e('Material Includes', 'tutor'); ?>
+			<?php _e( 'Material Includes', 'tutor' ); ?>
 		</h3>
 		<ul class="tutor-course-details-widget-list tutor-fs-6 tutor-color-black">
-			<?php foreach ($materials as $material): ?>
+			<?php foreach ( $materials as $material ) : ?>
 				<li class="tutor-d-flex tutor-mb-12">
 					<span class="tutor-icon-mark tutor-color-primary tutor-mr-12" area-hidden="true"></span>
 					<span><?php echo $material; ?></span>
@@ -35,10 +35,9 @@ if ( is_array( $materials ) && count( $materials ) ) {
 			<?php endforeach; ?>
 		</ul>
 	</div>
-	<?php 
-} 
+	<?php
+}
 
-do_action('tutor_course/single/after/material_includes'); 
+do_action( 'tutor_course/single/after/material_includes' );
 
 ?>
-

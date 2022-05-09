@@ -10,9 +10,9 @@ $fields_groups = is_array( $blocks['fields_group'] ) ? $blocks['fields_group'] :
 
 ?>
 <div class="tutor-option-single-item tutor-mb-32 <?php echo esc_attr( $blocks['slug'] ); ?>">
-	<?php if ( isset($blocks['label']) ) : ?>
+	<?php if ( isset( $blocks['label'] ) ) : ?>
 		<div class="tutor-option-group-title tutor-mb-16">
-			<div class="tutor-fs-6 tutor-color-muted"><?php echo esc_attr($blocks['label']); ?></div>
+			<div class="tutor-fs-6 tutor-color-muted"><?php echo esc_attr( $blocks['label'] ); ?></div>
 		</div>
 	<?php endif; ?>
 	<div class="item-grid">

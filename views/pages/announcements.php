@@ -1,72 +1,15 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
 /**
  * Since 1.7.9
  * configure query with get params
  *
- * @package Announcement List
+ * @package tutor
  */
 
-use TUTOR\Input;
-use TUTOR\Announcements;
-$announcement_obj = new Announcements();
-
-$limit			= tutor_utils()->get_option( 'pagination_per_page' );
-$page_filter	= Input::get( 'paged', 1, Input::TYPE_INT );
-$order_filter	= Input::get( 'order', 'DESC' );
-$search_filter	= Input::get( 'search', '');
-$course_id	 	= Input::get( 'course-id', '' );
-$date_filter	= Input::get( 'date', '');
-
-$year  = date( 'Y', strtotime( $date_filter ) );
-$month = date( 'm', strtotime( $date_filter ) );
-$day   = date( 'd', strtotime( $date_filter ) );
-
-$args = array(
-	'post_type'      => 'tutor_announcements',
-	'post_status'    => 'publish',
-	's'              => $search_filter,
-	'post_parent'    => $course_id,
-	'posts_per_page' => sanitize_text_field( $limit ),
-	'paged'          => sanitize_text_field( $page_filter ),
-	'orderBy'        => 'ID',
-	'order'          => sanitize_text_field( $order_filter ),
-
-);
-if ( ! empty( $date_filter ) ) {
-	$args['date_query'] = array(
-		array(
-			'year'  => $year,
-			'month' => $month,
-			'day'   => $day,
-		),
-	);
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
-if ( ! current_user_can( 'administrator' ) ) {
-	$args['author'] = get_current_user_id();
-}
-$the_query = new WP_Query( $args );
 
-/**
- * Navbar data to make nav menu
- */
-$navbar_data = array(
-	'page_title' => $announcement_obj->page_title,
-);
-
-/**
- * Filters for sorting searching
- */
-$filters = array(
-	'bulk_action'   => $announcement_obj->bulk_action,
-	'bulk_actions'  => $announcement_obj->prepare_bulk_actions(),
-	'ajax_action'   => 'tutor_announcement_bulk_action',
-	'filters'       => true,
-	'course_filter' => true,
-);
 ?>
 
 <div class="tutor-admin-wrap">
@@ -123,7 +66,7 @@ $filters = array(
 					'paged'         => $page_filter,
 				)
 			);
-		?>
+			?>
 		</div>
 	</div>
 </div>

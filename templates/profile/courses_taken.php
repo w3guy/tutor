@@ -14,7 +14,7 @@ $pageposts = tutor_utils()->get_courses_by_instructor( $user_id );
 	<?php
 	if ( $pageposts ) {
 		global $post;
-		
+
 		foreach ( $pageposts as $post ) {
 			setup_postdata( $post );
 

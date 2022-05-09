@@ -11,4 +11,4 @@
  * @version 1.4.3
  */
 
-tutor_load_template_from_custom_path(__DIR__.'/single-content-loader.php', array('context' => 'assignment'), false);
+tutor_load_template_from_custom_path( __DIR__ . '/single-content-loader.php', array( 'context' => 'assignment' ), false );

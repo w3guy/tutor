@@ -4,4 +4,4 @@
 	// But still need to keep to prevent file not found error in Avada that causes if we delete it permanently.
 	// The tutor dashboard actually will be rendered using other hook.
 	return;
-?>
+

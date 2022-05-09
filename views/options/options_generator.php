@@ -29,8 +29,8 @@
 
 				$nav_url = add_query_arg( array( 'tab_page' => $key ) );
 				echo '<li class="option-nav-item ' . esc_attr( $current_class ) . '">
-						<a href="' . esc_url( $nav_url ) . '" data-tab="#' . esc_attr( $key ) . '" class="tutor-option-nav-item">' . 
-							esc_attr( $option_group['label'] ) . 
+						<a href="' . esc_url( $nav_url ) . '" data-tab="#' . esc_attr( $key ) . '" class="tutor-option-nav-item">' .
+							esc_attr( $option_group['label'] ) .
 						'</a> 
 					</li>';
 			}

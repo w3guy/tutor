@@ -3,28 +3,28 @@
 
 	// QNA data
 	$question = tutor_utils()->get_qa_question( $question_id );
-	if (property_exists($question, 'meta')) {
-		$meta     = $question->meta;
-	}
+if ( property_exists( $question, 'meta' ) ) {
+	$meta = $question->meta;
+}
 	$answers  = tutor_utils()->get_qa_answer_by_question( $question_id );
 	$back_url = isset( $back_url ) ? $back_url : remove_query_arg( 'question_id', tutor()->current_url );
 
 	// Badges data
-	$_user_id	   = get_current_user_id();
-	if (property_exists($question, 'user_id')) {
-		$is_user_asker = $question->user_id == $_user_id;
-	}
-	$id_slug 	   = $is_user_asker ? '_'.$_user_id : '';
-	$is_solved     = (int) tutor_utils()->array_get( 'tutor_qna_solved'.$id_slug, $meta, 0 );
-	$is_important  = (int) tutor_utils()->array_get( 'tutor_qna_important'.$id_slug, $meta, 0 );
-	$is_archived   = (int) tutor_utils()->array_get( 'tutor_qna_archived'.$id_slug, $meta, 0 );
-	$is_read       = (int) tutor_utils()->array_get( 'tutor_qna_read'.$id_slug, $meta, 0 );
+	$_user_id = get_current_user_id();
+if ( property_exists( $question, 'user_id' ) ) {
+	$is_user_asker = $question->user_id == $_user_id;
+}
+	$id_slug      = $is_user_asker ? '_' . $_user_id : '';
+	$is_solved    = (int) tutor_utils()->array_get( 'tutor_qna_solved' . $id_slug, $meta, 0 );
+	$is_important = (int) tutor_utils()->array_get( 'tutor_qna_important' . $id_slug, $meta, 0 );
+	$is_archived  = (int) tutor_utils()->array_get( 'tutor_qna_archived' . $id_slug, $meta, 0 );
+	$is_read      = (int) tutor_utils()->array_get( 'tutor_qna_read' . $id_slug, $meta, 0 );
 
 	$modal_id     = 'tutor_qna_delete_single_' . $question_id;
 	$reply_hidden = ! wp_doing_ajax() ? 'display:none;' : 0;
 
 	// At first set this as read
-	update_comment_meta( $question_id, 'tutor_qna_read'.$id_slug, 1 );
+	update_comment_meta( $question_id, 'tutor_qna_read' . $id_slug, 1 );
 ?>
 
 <div class="tutor-qna-single-question<?php echo is_admin() ? ' tutor-admin-wrap' : ''; ?>" data-course_id="<?php echo $question->course_id; ?>" data-question_id="<?php echo $question_id; ?>" data-context="<?php echo $context; ?>">
@@ -35,7 +35,7 @@
 					<div class="tutor-d-lg-flex tutor-align-lg-center tutor-px-12 tutor-py-16">
 						<a class="tutor-btn tutor-btn-ghost" href="<?php echo $back_url; ?>">
 							<span class="tutor-icon-previous tutor-mr-8" area-hidden="true"></span>
-							<?php _e('Back', 'tutor'); ?>
+							<?php _e( 'Back', 'tutor' ); ?>
 						</a>
 					</div>
 				</div>
@@ -78,10 +78,10 @@
 				<div class="tutor-qa-chatlist">
 					<?php
 						$current_user_id = get_current_user_id();
-						$avatar_url       = array();
+						$avatar_url      = array();
 						$is_single       = in_array( $context, array( 'course-single-qna-sidebar', 'course-single-qna-single' ) );
 
-						if ( is_array( $answers ) && count( $answers ) ) {
+					if ( is_array( $answers ) && count( $answers ) ) {
 						$reply_count = count( $answers ) - 1;
 						foreach ( $answers as $answer ) {
 							if ( ! isset( $avatar_url[ $answer->user_id ] ) ) {
@@ -138,15 +138,18 @@
 
 <?php
 	// Delete modal
-	tutor_load_template( 'modal.confirm', array(
-		'id' => $modal_id,
-		'image' => 'icon-trash.svg',
-		'title' => __('Do You Want to Delete This Question?', 'tutor'),
-		'content' => __('All the replies also will be deleted.', 'tutor'),
-		'yes' => array(
-			'text' => __('Yes, Delete This', 'tutor'),
-			'class' => 'tutor-list-ajax-action',
-			'attr' => array('data-request_data=\'{"action":"tutor_delete_dashboard_question", "question_id":"' . $question_id . '"}\'', 'data-redirect_to="' . $back_url . '"')
-		),
-	));
-?>
+	tutor_load_template(
+		'modal.confirm',
+		array(
+			'id'      => $modal_id,
+			'image'   => 'icon-trash.svg',
+			'title'   => __( 'Do You Want to Delete This Question?', 'tutor' ),
+			'content' => __( 'All the replies also will be deleted.', 'tutor' ),
+			'yes'     => array(
+				'text'  => __( 'Yes, Delete This', 'tutor' ),
+				'class' => 'tutor-list-ajax-action',
+				'attr'  => array( 'data-request_data=\'{"action":"tutor_delete_dashboard_question", "question_id":"' . $question_id . '"}\'', 'data-redirect_to="' . $back_url . '"' ),
+			),
+		)
+	);
+	?>

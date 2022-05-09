@@ -5,8 +5,8 @@
  * @version 1.4.3
  */
 
-$per_page     = tutor_utils()->get_option('statement_show_per_page', 20);
-$current_page = max( 1, tutor_utils()->avalue_dot( 'current_page', tutor_sanitize_data($_GET) ) );
+$per_page     = tutor_utils()->get_option( 'statement_show_per_page', 20 );
+$current_page = max( 1, tutor_utils()->avalue_dot( 'current_page', tutor_sanitize_data( $_GET ) ) );
 $offset       = ( $current_page - 1 ) * $per_page;
 
 $earning_sum                   = tutor_utils()->get_earning_sum();
@@ -20,8 +20,8 @@ $user_id               = get_current_user_id();
 $balance_formatted     = tutor_utils()->tutor_price( $earning_sum->balance );
 $is_balance_sufficient = true; // $earning_sum->balance >= $min_withdraw;
 $all_histories         = tutor_utils()->get_withdrawals_history( $user_id, array( 'status' => array( 'pending', 'approved', 'rejected' ) ), $offset, $per_page );
-$image_base   = tutor()->url . '/assets/images/';
-$method_icons = array(
+$image_base            = tutor()->url . '/assets/images/';
+$method_icons          = array(
 	'bank_transfer_withdraw' => $image_base . 'icon-bank.svg',
 	'echeck_withdraw'        => $image_base . 'icon-echeck.svg',
 	'paypal_withdraw'        => $image_base . 'icon-paypal.svg',
@@ -80,7 +80,7 @@ if ( function_exists( 'get_woocommerce_currency_symbol' ) ) {
 
 	<div class="current-withdraw-account-wrap tutor-d-flex tutor-mt-20">
 		<span class="tutor-svg tutor-fs-4 tutor-mr-8">
-			<?php echo tutor_utils()->get_svg_icon('infoCircle'); ?>
+			<?php echo tutor_utils()->get_svg_icon( 'infoCircle' ); ?>
 		</span>
 		<span class="tutor-fs-7 tutor-mt-4">
 			<?php
@@ -170,8 +170,8 @@ if ( function_exists( 'get_woocommerce_currency_symbol' ) ) {
 		</div>
 		<?php
 	}
-	
-	if ( is_array( $all_histories->results ) && count ( $all_histories->results ) ) {
+
+	if ( is_array( $all_histories->results ) && count( $all_histories->results ) ) {
 		?>
 		<div class="withdraw-history-table-wrap tutor-tooltip-inside tutor-mt-40">
 			<div class="withdraw-history-table-title">
@@ -305,18 +305,18 @@ if ( function_exists( 'get_woocommerce_currency_symbol' ) ) {
 </div>
 
 <div class="tutor-mt-25">
-	<?php 
-		if($all_histories->count >= $per_page) {
-			$pagination_data = array(
-				'total_items' => $all_histories->count,
-				'per_page'    => $per_page,
-				'paged'       => $current_page,
-			);
+	<?php
+	if ( $all_histories->count >= $per_page ) {
+		$pagination_data = array(
+			'total_items' => $all_histories->count,
+			'per_page'    => $per_page,
+			'paged'       => $current_page,
+		);
 
-			tutor_load_template_from_custom_path(
-				tutor()->path . 'templates/dashboard/elements/pagination.php',
-				$pagination_data
-			);
-		}
+		tutor_load_template_from_custom_path(
+			tutor()->path . 'templates/dashboard/elements/pagination.php',
+			$pagination_data
+		);
+	}
 	?>
 </div>

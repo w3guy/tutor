@@ -18,11 +18,11 @@ $saved_data = $this->get( $field_key, array() );
 			<div class="loading-spinner"></div>
 			<?php
 			$editor_id = 'editor_' . $field_id;
-			$content = empty( $saved_data ) ? $field['default'] : wp_unslash( json_decode( $saved_data ) );
-			$content = html_entity_decode( tutor_utils()->clean_html_content( $content ) );
-			
+			$content   = empty( $saved_data ) ? $field['default'] : wp_unslash( json_decode( $saved_data ) );
+			$content   = html_entity_decode( tutor_utils()->clean_html_content( $content ) );
+
 			$args = array(
-				'textarea_name' => 'tutor_option[' .  $field_key. ']',
+				'textarea_name' => 'tutor_option[' . $field_key . ']',
 				'tinymce'       => array(
 					'toolbar1' => 'bold, italic, underline, forecolor, fontselect, fontsizeselect, formatselect, alignleft, aligncenter, alignright, bullist, numlist, link, unlink, removeformat',
 				),

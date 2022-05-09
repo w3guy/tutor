@@ -9,48 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use TUTOR\Students_List;
-use TUTOR\Input;
-
-$students = new Students_List();
-
-/**
- * Short able params
- */
-$user_id	= Input::get( 'user_id' , '' );
-$course_id	= Input::get( 'course-id' , '' );
-$order		= Input::get( 'order', 'DESC' );
-$date		= Input::has( 'date' ) ? tutor_get_formated_date( 'Y-m-d' , Input::get( 'date' ) ) : '';
-$search		= Input::get( 'search', '' );
-
-/**
- * Pagination data
- */
-$paged    = Input::get( 'paged', 1, Input::TYPE_INT );
-$per_page = tutor_utils()->get_option( 'pagination_per_page' );
-$offset   = ( $per_page * $paged ) - $per_page;
-
-$students_list 	= tutor_utils()->get_students( $offset, $per_page, $search, $course_id, $date, $order );
-$total     		= tutor_utils()->get_total_students( $search, $course_id, $date );
-
-/**
- * Navbar data to make nav menu
- */
-$navbar_data = array(
-	'page_title' => $students->page_title,
-);
-
-/**
- * Bulk action & filters
- */
-$filters = array(
-	'bulk_action'   => tutor_utils()->has_user_role('administrator') ? $students->bulk_action : false,
-	'bulk_actions'  => $students->prpare_bulk_actions(),
-	'ajax_action'   => 'tutor_student_bulk_action',
-	'filters'       => true,
-	'course_filter' => true,
-);
-
 ?>
 
 <div class="tutor-admin-wrap">
@@ -130,7 +88,7 @@ $filters = array(
 							</td>
 							<td data-th="<?php esc_html_e( 'Registration Date', 'tutor' ); ?>">
 								<span class="tutor-color-black tutor-fs-7">
-								<?php echo esc_html( date_i18n( get_option( 'date_format' ). ', ' . get_option( 'time_format' ), strtotime( $list->user_registered ) ) ); ?>
+								<?php echo esc_html( date_i18n( get_option( 'date_format' ) . ', ' . get_option( 'time_format' ), strtotime( $list->user_registered ) ) ); ?>
 								</span>
 							</td>
 							<td data-th="<?php esc_html_e( 'Course Taken', 'tutor' ); ?>">
@@ -138,7 +96,7 @@ $filters = array(
 								<span class="tutor-color-black tutor-fs-7 tutor-fw-medium"><?php echo esc_html( is_array( $course_taken ) ? count( $course_taken ) : 0 ); ?></span>
 							</td>
 							<td data-th="<?php esc_html_e( 'URL', 'tutor' ); ?>">
-								<?php if( tutor()->has_pro ) : ?>
+								<?php if ( tutor()->has_pro ) : ?>
 								<div class="tutor-d-inline-flex tutor-align-center td-action-btns">
 									<a href="<?php echo esc_url( admin_url( 'admin.php?page=tutor_report&sub_page=students&student_id=' . $list->ID ) ); ?>"
 									class="tutor-btn tutor-btn-outline-primary tutor-btn-sm">
@@ -165,15 +123,15 @@ $filters = array(
 				/**
 				 * Prepare pagination data & load template
 				 */
-				if($total > $per_page) {
-					$pagination_data     = array(
-						'total_items' => $total,
-						'per_page'    => $per_page,
-						'paged'       => $paged,
-					);
-					$pagination_template = tutor()->path . 'views/elements/pagination.php';
-					tutor_load_template_from_custom_path( $pagination_template, $pagination_data );
-				}
+			if ( $total > $per_page ) {
+				$pagination_data     = array(
+					'total_items' => $total,
+					'per_page'    => $per_page,
+					'paged'       => $paged,
+				);
+				$pagination_template = tutor()->path . 'views/elements/pagination.php';
+				tutor_load_template_from_custom_path( $pagination_template, $pagination_data );
+			}
 			?>
 		</div>
 	</div>

@@ -1,0 +1,329 @@
+<?php
+namespace Tutor\Controllers;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+use Tutor\Core\Input;
+use Tutor\Traits\BackendPageTrait;
+
+/**
+ * Class Question Answer Controller
+ * 
+ * @author: themeum
+ * @link: https://themeum.com
+ * @package tutor
+ */
+class QuestionAnswerController {
+	use BackendPageTrait;
+
+	public function __construct() {
+		add_action( 'wp_ajax_tutor_qna_create_update', array( $this, 'tutor_qna_create_update' ) );
+
+		/**
+		 * Delete question
+		 *
+		 * @since  v.1.6.4
+		 */
+		add_action( 'wp_ajax_tutor_delete_dashboard_question', array( $this, 'tutor_delete_dashboard_question' ) );
+
+		/**
+		 * Take action against single qna
+		 *
+		 * @since v2.0.0
+		 */
+		add_action( 'wp_ajax_tutor_qna_single_action', array( $this, 'tutor_qna_single_action' ) );
+		add_action( 'wp_ajax_tutor_qna_bulk_action', array( $this, 'process_bulk_action' ) );
+	}
+
+	public function show_qa_page() {
+		if ( Input::has( 'question_id' ) ) {
+			tutor_load_template_from_custom_path(
+				tutor()->path . '/views/qna/qna-single.php',
+				array(
+					'question_id' => Input::get( 'question_id' ),
+					'context'     => 'backend-dashboard-qna-single',
+				)
+			);
+			return;
+		}
+
+		$qna_object     = new self();
+		$qna            = $qna_object->get_items( $_GET );
+		$qna_list       = $qna['items'];
+		$qna_pagination = $qna['pagination'];
+
+		$filters = array(
+			'bulk_action'   => true,
+			'bulk_actions'  => $qna_object->get_bulk_actions(),
+			'ajax_action'   => 'tutor_qna_bulk_action',
+			'filters'       => true,
+			'course_filter' => true,
+		);
+
+		/**
+		 * Determine active tab
+		 */
+
+		$active_tab = Input::get( 'tab', 'all' );
+
+		$navbar_data = array(
+			'page_title' => __( 'Question & Answer', 'tutor' ),
+			'tabs'       => $qna_object->tabs_key_value(),
+			'active'     => $active_tab,
+		);
+
+		include tutor()->path . 'views/pages/question_answer.php';
+	}
+
+	public function tutor_qna_create_update() {
+		tutor_utils()->checking_nonce();
+
+		global $wpdb;
+
+		$qna_text = wp_kses_post( $_POST['answer'] );
+		if ( ! $qna_text ) {
+			// Content validation
+			wp_send_json_error( array( 'message' => __( 'Empty Content Not Allowed!', 'tutor' ) ) );
+		}
+
+		// Prepare course, question info
+		$course_id   = (int) sanitize_text_field( $_POST['course_id'] );
+		$question_id = (int) sanitize_text_field( $_POST['question_id'] );
+		$context     = sanitize_text_field( $_POST['context'] );
+
+		// Prepare user info
+		$user_id = get_current_user_id();
+		$user    = get_userdata( $user_id );
+		$date    = date( 'Y-m-d H:i:s', tutor_time() );
+
+		// Insert data prepare
+		$data = apply_filters(
+			'tutor_qna_insert_data',
+			array(
+				'comment_post_ID'  => $course_id,
+				'comment_author'   => $user->user_login,
+				'comment_date'     => $date,
+				'comment_date_gmt' => get_gmt_from_date( $date ),
+				'comment_content'  => $qna_text,
+				'comment_approved' => 'approved',
+				'comment_agent'    => 'TutorLMSPlugin',
+				'comment_type'     => 'tutor_q_and_a',
+				'comment_parent'   => $question_id,
+				'user_id'          => $user_id,
+			)
+		);
+
+		// Insert new question/answer.
+		$wpdb->insert( $wpdb->comments, $data );
+		! $question_id ? $question_id = (int) $wpdb->insert_id : 0;
+
+		// Mark the question unseen if action made from student
+		$asker_id = $this->get_asker_id( $question_id );
+		$self     = $asker_id == $user_id;
+		update_comment_meta( $question_id, 'tutor_qna_read' . ( $self ? '' : '_' . $asker_id ), 0 );
+
+		do_action( 'tutor_after_asked_question', $data );
+
+		// Provide the html now.
+		ob_start();
+		tutor_load_template_from_custom_path(
+			tutor()->path . '/views/qna/qna-single.php',
+			array(
+				'question_id' => $question_id,
+				'back_url'    => isset( $_POST['back_url'] ) ? esc_url( $_POST['back_url'] ) : '',
+				'context'     => $context,
+			)
+		);
+
+		wp_send_json_success( array( 'html' => ob_get_clean() ) );
+	}
+
+	/**
+	 * Delete question [frontend dashboard]
+	 *
+	 * @since  v.1.6.4
+	 */
+	public function tutor_delete_dashboard_question() {
+		tutor_utils()->checking_nonce();
+
+		$question_id = intval( sanitize_text_field( $_POST['question_id'] ) );
+
+		if ( ! $question_id || ! tutor_utils()->can_user_manage( 'qa_question', $question_id ) ) {
+			wp_send_json_error( array( 'message' => __( 'Access Denied', 'tutor' ) ) );
+		}
+
+		$this->delete_qna_permanently( array( $question_id ) );
+
+		wp_send_json_success();
+	}
+
+	private function delete_qna_permanently( $question_ids ) {
+		if ( count( $question_ids ) ) {
+			global $wpdb;
+			$question_ids = implode( ',', $question_ids );
+
+			// Deleting question (comment), child question and question meta (comment meta)
+			$wpdb->query( "DELETE FROM {$wpdb->comments} WHERE {$wpdb->comments}.comment_ID IN($question_ids)" );
+			$wpdb->query( "DELETE FROM {$wpdb->comments} WHERE {$wpdb->comments}.comment_parent IN($question_ids)" );
+			$wpdb->query( "DELETE FROM {$wpdb->commentmeta} WHERE {$wpdb->commentmeta}.comment_id IN($question_ids)" );
+		}
+	}
+
+	function process_bulk_action() {
+		tutor_utils()->checking_nonce();
+
+		$user_id = get_current_user_id();
+		$action  = isset( $_POST['bulk-action'] ) ? sanitize_text_field( $_POST['bulk-action'] ) : null;
+
+		switch ( $action ) {
+			case 'delete':
+				$qa_ids = sanitize_text_field( $_POST['bulk-ids'] );
+				$qa_ids = explode( ',', $qa_ids );
+				$qa_ids = array_filter(
+					$qa_ids,
+					function( $id ) use ( $user_id ) {
+						return is_numeric( $id ) && tutor_utils()->can_user_manage( 'qa_question', $id, $user_id );
+					}
+				);
+
+				$this->delete_qna_permanently( $qa_ids );
+				break;
+		}
+
+		wp_send_json_success();
+	}
+
+	private function get_asker_id( $question_id ) {
+		global $wpdb;
+		$author_id = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT user_id
+			FROM {$wpdb->comments}
+			WHERE comment_ID=%d",
+				$question_id
+			)
+		);
+
+		return $author_id;
+	}
+
+	public function tutor_qna_single_action() {
+		tutor_utils()->checking_nonce();
+
+		$question_id = intval( sanitize_text_field( $_POST['question_id'] ) );
+
+		if ( ! tutor_utils()->can_user_manage( 'qa_question', $question_id ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission Denied!', 'tutor' ) ) );
+		}
+
+		// Get who asked the question
+		$asker_id     = $this->get_asker_id( $question_id );
+		$asker_prefix = ( isset( $_POST['context'] ) && $_POST['context'] == 'frontend-dashboard-qna-table-student' ) ? '_' . get_current_user_id() : '';
+
+		// Get the existing value from meta
+		$action = sanitize_text_field( $_POST['qna_action'] );
+
+		// If current user asker, then make it unread for self
+		// If it is instructor, then make unread for instructor side
+		$meta_key = 'tutor_qna_' . $action . $asker_prefix;
+
+		$current_value = (int) get_comment_meta( $question_id, $meta_key, true );
+
+		$new_value = $current_value == 1 ? 0 : 1;
+
+		// Update the reverted value
+		update_comment_meta( $question_id, $meta_key, $new_value );
+
+		// Transfer the new status
+		wp_send_json_success( array( 'new_value' => $new_value ) );
+	}
+
+	/**
+	 * Available tabs that will visible on the right side of page navbar
+	 *
+	 * @return array
+	 * @since v2.0.0
+	 */
+	public static function tabs_key_value( $asker_id = null ) {
+		$stats = array(
+			'all'       => tutor_utils()->get_qa_questions( 0, 99999, '', null, null, $asker_id, null, true ),
+			'read'      => tutor_utils()->get_qa_questions( 0, 99999, '', null, null, $asker_id, 'read', true ),
+			'unread'    => tutor_utils()->get_qa_questions( 0, 99999, '', null, null, $asker_id, 'unread', true ),
+			'important' => tutor_utils()->get_qa_questions( 0, 99999, '', null, null, $asker_id, 'important', true ),
+			'archived'  => tutor_utils()->get_qa_questions( 0, 99999, '', null, null, $asker_id, 'archived', true ),
+		);
+
+		// Assign value, url etc to the tab array
+		$tabs = array_map(
+			function( $tab ) use ( $stats ) {
+				return array(
+					'key'   => $tab,
+					'title' => __( ucwords( $tab ), 'tutor' ),
+					'value' => $stats[ $tab ],
+					'url'   => add_query_arg( array( 'tab' => $tab ), remove_query_arg( 'tab' ) ),
+				);
+			},
+			array_keys( $stats )
+		);
+
+		return $tabs;
+	}
+
+	function get_items( $args = array() ) {
+		$per_page = tutor_utils()->get_option( 'pagination_per_page' );
+
+		$search_term = '';
+		if ( isset( $args['search'] ) ) {
+			$search_term = sanitize_text_field( $args['search'] );
+		}
+
+		$current_page = isset( $_REQUEST['paged'] ) ? absint( $_REQUEST['paged'] ) : 1;
+
+		$question_status = ! empty( $args['tab'] ) ? $args['tab'] : null;
+		$items           = tutor_utils()->get_qa_questions( ( $current_page - 1 ) * $per_page, $per_page, $search_term, null, null, null, $question_status, false, $args );
+		$total_items     = tutor_utils()->get_qa_questions( ( $current_page - 1 ) * $per_page, $per_page, $search_term, null, null, null, $question_status, true, $args );
+
+		return array(
+			'items'      => $items,
+			'pagination' => array(
+				'total_items' => $total_items,
+				'per_page'    => $per_page,
+				'paged'       => $current_page,
+			),
+		);
+	}
+
+	public function get_bulk_actions() {
+		return array(
+			$this->bulk_action_default(),
+			$this->bulk_action_delete(),
+		);
+	}
+
+	/**
+	 * Get answer list by question id & type
+	 *
+	 * @since v2.0.2
+	 *
+	 * @param integer $question_id
+	 * @param string  $question_type
+	 *
+	 * @return array list of answer
+	 */
+	public static function answer_list_by_question( int $question_id, string $question_type ): array {
+		global $wpdb;
+		$answers = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}tutor_quiz_question_answers 
+				where belongs_question_id = %d 
+					AND belongs_question_type = %s 
+				order by answer_order asc ;",
+				$question_id,
+				$question_type
+			)
+		);
+		return is_array( $answers ) && count( $answers ) ? $answers : array();
+	}
+}

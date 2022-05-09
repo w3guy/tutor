@@ -2,67 +2,12 @@
 /**
  * Withdraw List Template.
  *
- * @package Withdraw List
+ * @package tutor
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-use TUTOR\Withdraw_Requests_List;
-$withdraw = new Withdraw_Requests_List();
-
-/**
- * Short able params
- */
-$order       = isset( $_GET['order'] ) ? $_GET['order'] : 'DESC';
-$date        = isset( $_GET['date'] ) ? tutor_get_formated_date( 'Y-m-d', $_GET['date'] ) : '';
-$search_term = isset( $_GET['search'] ) ? $_GET['search'] : '';
-
-/**
- * Determine active tab
- */
-$active_tab = isset( $_GET['data'] ) && $_GET['data'] !== '' ? esc_html__( $_GET['data'] ) : 'all';
-
-/**
- * Pagination data
- */
-$paged    = ( isset( $_GET['paged'] ) && is_numeric( $_GET['paged'] ) && $_GET['paged'] >= 1 ) ? $_GET['paged'] : 1;
-$per_page = tutor_utils()->get_option( 'pagination_per_page' );
-$offset   = ( $per_page * $paged ) - $per_page;
-
-$args          = array(
-	'status'   => 'all' === $active_tab ? '' : $active_tab,
-	'date'     => $date,
-	'order'    => $order,
-	'search'   => $search_term,
-);
-$withdraw_list = tutor_utils()->get_withdrawals_history( null, $args, $offset, $per_page);
-$total         = $withdraw_list->count;
-
-/**
- * Navbar data to make nav menu
- */
-$navbar_data = array(
-	'page_title' => $withdraw->page_title,
-	'tabs'       => $withdraw->tabs_key_value( $date, $search_term ),
-	'active'     => $active_tab,
-);
-
-/**
- * Bulk action & filters
- */
-// $filters = array(
-// 'bulk_action'   => $enrollments->bulk_action,
-// 'bulk_actions'  => $enrollments->prpare_bulk_actions(),
-// 'search_filter' => true,
-// );
-$filters = array(
-	'bulk_action'   => false,
-	'filters'       => true,
-	'course_filter' => false,
-);
-
 ?>
 
 <div class="tutor-admin-wrap">
@@ -320,15 +265,15 @@ $filters = array(
 					/**
 					 * Prepare pagination data & load template
 					 */
-					if ($total > $per_page) {
-						$pagination_data     = array(
-							'total_items' => $total,
-							'per_page'    => $per_page,
-							'paged'       => $paged,
-						);
-						$pagination_template = tutor()->path . 'views/elements/pagination.php';
-						tutor_load_template_from_custom_path( $pagination_template, $pagination_data );
-					}
+				if ( $total > $per_page ) {
+					$pagination_data     = array(
+						'total_items' => $total,
+						'per_page'    => $per_page,
+						'paged'       => $paged,
+					);
+					$pagination_template = tutor()->path . 'views/elements/pagination.php';
+					tutor_load_template_from_custom_path( $pagination_template, $pagination_data );
+				}
 				?>
 			</div>
 
@@ -371,7 +316,7 @@ $filters = array(
 							
 							<div class="tutor-d-flex tutor-justify-center tutor-my-48">
 								<button data-tutor-modal-close class="tutor-btn tutor-btn-outline-primary">
-									<?php esc_html_e('Cancel', 'tutor'); ?>
+									<?php esc_html_e( 'Cancel', 'tutor' ); ?>
 								</button>
 								<button type="submit" class="tutor-btn tutor-btn-primary tutor-ml-20" data-tutor-modal-submit>
 									<?php esc_html_e( 'Yes, Approve Withdrawal', 'tutor' ); ?>
@@ -429,7 +374,7 @@ $filters = array(
 							
 							<div class="tutor-d-flex tutor-justify-center tutor-my-48">
 								<button data-tutor-modal-close class="tutor-btn tutor-btn-outline-primary">
-									<?php esc_html_e('Cancel', 'tutor'); ?>
+									<?php esc_html_e( 'Cancel', 'tutor' ); ?>
 								</button>
 								<button type="submit" class="tutor-btn tutor-btn-primary tutor-ml-20" data-tutor-modal-submit>
 									<?php esc_html_e( 'Yes, Reject Withdrawal', 'tutor' ); ?>

@@ -4,7 +4,6 @@
  * Template for settings page
  *
  * @since v.2.0
- *
  */
 
 ?>
@@ -42,7 +41,7 @@
 						$active_class = $active_tab == $key ? esc_attr( ' is-active' ) : '';
 						if ( $active_tab == $key ) {
 							$active_class = ' is-active';
-						} elseif ( 'general' === $key && !in_array($active_tab,array_keys($option_fields))){
+						} elseif ( 'general' === $key && ! in_array( $active_tab, array_keys( $option_fields ) ) ) {
 							$active_class = ' is-active';
 						}
 						?>
@@ -70,15 +69,15 @@
 
 						if ( $active_tab == $key ) {
 							$active_class = ' is-active';
-						} elseif ( 'general' === $key && !in_array($active_tab,array_keys($option_fields))){
+						} elseif ( 'general' === $key && ! in_array( $active_tab, array_keys( $option_fields ) ) ) {
 							$active_class = ' is-active';
 						}
 						?>
 						<div id="<?php echo esc_attr( $key ); ?>" class="tutor-option-nav-page<?php echo esc_attr( $active_class ); ?>">
 							<?php
-								if ( is_array( $section ) ) {
-									echo $this->template( $section );
-								}
+							if ( is_array( $section ) ) {
+								echo $this->template( $section );
+							}
 							?>
 						</div>
 						<?php

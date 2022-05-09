@@ -7,7 +7,7 @@
 
 if ( tutor_utils()->get_option( 'enable_profile_completion' ) ) {
 	$profile_completion = tutor_utils()->user_profile_completion();
-	$is_instructor      = tutor_utils()->is_instructor(null, true);
+	$is_instructor      = tutor_utils()->is_instructor( null, true );
 	$total_count        = count( $profile_completion );
 	$incomplete_count   = count(
 		array_filter(
@@ -20,7 +20,7 @@ if ( tutor_utils()->get_option( 'enable_profile_completion' ) ) {
 	$complete_count     = $total_count - $incomplete_count;
 
 	if ( $is_instructor ) {
-		if ( isset($total_count) && isset($incomplete_count) && $incomplete_count <= $total_count ) {
+		if ( isset( $total_count ) && isset( $incomplete_count ) && $incomplete_count <= $total_count ) {
 			?>
 			<div class="tutor-profile-completion tutor-card tutor-px-32 tutor-py-24 tutor-mb-40">
 				<div class="tutor-row tutor-gx-0">
@@ -49,16 +49,16 @@ if ( tutor_utils()->get_option( 'enable_profile_completion' ) ) {
 
 						<div class="tutor-fs-6 tutor-mt-20">
 							<?php
-								$profile_complete_text = __("Please complete profile", "tutor");
-								if($complete_count > ( $total_count / 2 ) && $complete_count < $total_count) {
-									$profile_complete_text = __("You are almost done", "tutor");
-								} else if($complete_count === $total_count) {
-									$profile_complete_text = __("Thanks for completing your profile", "tutor");
-								}
+								$profile_complete_text = __( 'Please complete profile', 'tutor' );
+							if ( $complete_count > ( $total_count / 2 ) && $complete_count < $total_count ) {
+								$profile_complete_text = __( 'You are almost done', 'tutor' );
+							} elseif ( $complete_count === $total_count ) {
+								$profile_complete_text = __( 'Thanks for completing your profile', 'tutor' );
+							}
 								$profile_complete_status = $profile_complete_text;
 							?>
 
-							<span class="tutor-color-muted"><?php echo $profile_complete_status ?>:</span>
+							<span class="tutor-color-muted"><?php echo $profile_complete_status; ?>:</span>
 							<span><?php echo $complete_count . '/' . $total_count; ?></span>
 						</div>
 					</div>
@@ -74,7 +74,7 @@ if ( tutor_utils()->get_option( 'enable_profile_completion' ) ) {
 						foreach ( $profile_completion as $key => $data ) {
 							$is_set = $data['is_set']; // Whether the step is done or not
 							?>
-								<div class="tutor-d-flex tutor-align-center<?php echo $i < (count($profile_completion) - 1) ? ' tutor-mb-8' : ''; ?>">
+								<div class="tutor-d-flex tutor-align-center<?php echo $i < ( count( $profile_completion ) - 1 ) ? ' tutor-mb-8' : ''; ?>">
 									<?php if ( $is_set ) : ?>
 										<span class="tutor-icon-circle-mark-line tutor-color-success tutor-mr-8"></span>
 									<?php else : ?>
@@ -252,7 +252,7 @@ $courses_in_progress = tutor_utils()->get_active_courses_by_user( get_current_us
 				<div class="tutor-row tutor-gx-0">
 					<div class="tutor-col-lg-4">
 						<div class="tutor-ratio tutor-ratio-3x2">
-							<img class="tutor-card-image-left" src="<?php echo empty(esc_url($tutor_course_img)) ? $placeholder_img : esc_url($tutor_course_img) ?>" alt="<?php the_title(); ?>" loading="lazy">
+							<img class="tutor-card-image-left" src="<?php echo empty( esc_url( $tutor_course_img ) ) ? $placeholder_img : esc_url( $tutor_course_img ); ?>" alt="<?php the_title(); ?>" loading="lazy">
 						</div>
 					</div>
 

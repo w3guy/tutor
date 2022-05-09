@@ -1,22 +1,26 @@
 <?php
-	$per_page = tutor_utils()->get_option( 'pagination_per_page', 10 );
-	$current_page = max(1, (int)tutor_utils()->avalue_dot('current_page', $_POST));
-	$lesson_id = isset($_POST['lesson_id']) ? (int)$_POST['lesson_id'] : get_the_ID();
+	$per_page     = tutor_utils()->get_option( 'pagination_per_page', 10 );
+	$current_page = max( 1, (int) tutor_utils()->avalue_dot( 'current_page', $_POST ) );
+	$lesson_id    = isset( $_POST['lesson_id'] ) ? (int) $_POST['lesson_id'] : get_the_ID();
 
-    // The comment Query
-    $comments = get_comments( array(
-        'post_id' => $lesson_id,
-        'parent' => 0,
-		'paged' => $current_page,
-		'number' => $per_page
-    ) );
-	
-	$comment_count = get_comments( array(
-        'post_id' => $lesson_id,
-        'parent' => 0,
-		'count' => true
-    ) );
-?>
+	// The comment Query
+	$comments = get_comments(
+		array(
+			'post_id' => $lesson_id,
+			'parent'  => 0,
+			'paged'   => $current_page,
+			'number'  => $per_page,
+		)
+	);
+
+	$comment_count = get_comments(
+		array(
+			'post_id' => $lesson_id,
+			'parent'  => 0,
+			'count'   => true,
+		)
+	);
+	?>
 
 <div class="tutor-pagination-wrapper-replaceable tutor-single-course-lesson-comments tutor-pb-32" data-lesson_id="<?php echo $lesson_id; ?>">
 	<div class="tutor-fs-5 tutor-fw-medium tutor-color-black tutor-mb-36">
@@ -35,7 +39,7 @@
 			</div>
 			<div class="tutor-comment-submit-btn">
 				<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-sm tutor-lesson-comment">
-					<?php _e('Submit', 'tutor'); ?>
+					<?php _e( 'Submit', 'tutor' ); ?>
 				</button>
 			</div>
 		</form>
@@ -76,7 +80,7 @@
 						?>
 						<?php if ( is_array( $replies ) && count( $replies ) ) : ?>
 							<?php foreach ( $replies as $reply ) : ?>
-								<div class="tutor-comments-list tutor-child-comment tutor-mt-32" id="lesson-comment-<?php echo esc_attr($reply->comment_ID)?>">
+								<div class="tutor-comments-list tutor-child-comment tutor-mt-32" id="lesson-comment-<?php echo esc_attr( $reply->comment_ID ); ?>">
 									<div class="comment-avatar">
 										<img src="<?php echo get_avatar_url( $reply->user_id ); ?>" alt="">
 									</div>
@@ -110,7 +114,7 @@
 							</div>
 							<div class="tutor-comment-submit-btn">
 								<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-sm tutor-lesson-comment-reply">
-									<?php _e('Reply', 'tutor'); ?>
+									<?php _e( 'Reply', 'tutor' ); ?>
 								</button>
 							</div>
 						</form>
@@ -121,19 +125,19 @@
 		<?php endif; ?>
 	</div>
 
-	<?php 
+	<?php
 		$pagination_data = array(
 			'total_items' => $comment_count,
 			'per_page'    => $per_page,
 			'paged'       => $current_page,
-			'ajax'		  => array(
-				'action' => 'tutor_single_course_lesson_load_more',
-				'lesson_id' => $lesson_id,
-				'current_page_num' => $current_page
-			)
+			'ajax'        => array(
+				'action'           => 'tutor_single_course_lesson_load_more',
+				'lesson_id'        => $lesson_id,
+				'current_page_num' => $current_page,
+			),
 		);
 
 		$pagination_template_frontend = tutor()->path . 'templates/dashboard/elements/pagination.php';
 		tutor_load_template_from_custom_path( $pagination_template_frontend, $pagination_data );
-	?>
+		?>
 </div>

@@ -27,7 +27,7 @@ $announcements = tutor_utils()->get_announcements( get_the_ID() );
 					</div>
 
 					<div>
-						<span class="tutor-meta-key"><?php esc_html_e('By', 'tutor') ?></span>
+						<span class="tutor-meta-key"><?php esc_html_e( 'By', 'tutor' ); ?></span>
 						<span class="tutor-meta-value"><?php echo esc_html( get_userdata( $announcement->post_author )->display_name ); ?></span>
 					</div>
 

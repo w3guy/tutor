@@ -48,7 +48,7 @@ if ( ! in_array( $user->display_name, $public_display ) ) { // Only add this if 
 
 $public_display = array_map( 'trim', $public_display );
 $public_display = array_unique( $public_display );
-$max_filesize = floatval(ini_get('upload_max_filesize')) * (1024 * 1024);
+$max_filesize   = floatval( ini_get( 'upload_max_filesize' ) ) * ( 1024 * 1024 );
 // $max_filesize = 1009;
 ?>
 

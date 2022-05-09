@@ -8,7 +8,7 @@
  * @since v2.0.0
  */
 
-$courses       = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_courses() : tutor_utils()->get_courses_by_instructor();
+$courses = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_courses() : tutor_utils()->get_courses_by_instructor();
 // Filter params.
 $course_id    = isset( $_GET['course-id'] ) ? sanitize_text_field( $_GET['course-id'] ) : '';
 $order_filter = isset( $_GET['order'] ) ? $_GET['order'] : 'DESC';

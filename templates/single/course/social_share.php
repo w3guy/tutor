@@ -21,10 +21,10 @@ $share_config = array(
 
 <div class="tutor-social-share-wrap" data-social-share-config="<?php echo esc_attr( json_encode( $share_config ) ); ?>">
 	<?php
-		foreach ( $tutor_social_share_icons as $icon ) {
-			echo '<button class="tutor_share ' . $icon['share_class'] . '"> ' . 
-					$icon['icon_html'] . 
-				' </button>';
-		}
+	foreach ( $tutor_social_share_icons as $icon ) {
+		echo '<button class="tutor_share ' . $icon['share_class'] . '"> ' .
+				$icon['icon_html'] .
+			' </button>';
+	}
 	?>
 </div>

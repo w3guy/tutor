@@ -1,0 +1,14 @@
+{
+    "name": "themeum/tutor",
+    "description": "Tutor is a complete solution for creating a Learning Management System in WordPress way. It can help you to create small to large scale online education site very conveniently. Power features like report, certificate, course preview, private file sharing make Tutor a robust plugin for any educational institutes.",
+    "autoload": {
+        "psr-4": {
+            "Tutor\\": "src/"
+        },
+        "files": [
+            "src/Helpers/general-functions.php",
+            "src/Helpers/template-functions.php",
+            "src/Includes/tutor-template-hook.php"
+        ]
+    }
+}

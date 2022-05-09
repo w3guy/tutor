@@ -24,7 +24,7 @@ if ( ! $enable_q_and_a_on_course || $disable_qa_for_this_course ) {
 echo '<div class="tutor-qna-spotlight-sidebar">';
 	do_action( 'tutor_course/question_and_answer/before' );
 
-$questions = tutor_utils()->get_qa_questions( 0, 20, $search_term = '', $question_id = null, $meta_query = null, $asker_id = null, $question_status = null, $count_only = false, $args = array('course_id' => $course_id) );
+$questions = tutor_utils()->get_qa_questions( 0, 20, $search_term = '', $question_id = null, $meta_query = null, $asker_id = null, $question_status = null, $count_only = false, $args = array( 'course_id' => $course_id ) );
 foreach ( $questions as $question ) {
 	tutor_load_template_from_custom_path(
 		tutor()->path . '/views/qna/qna-single.php',
@@ -36,19 +36,20 @@ foreach ( $questions as $question ) {
 	);
 }
 
-if(!count($questions)) : ?>
+if ( ! count( $questions ) ) : ?>
 	<div class="tutor-empty-state-wrapper">
-        <div class="tutor-empty-state td-empty-state tutor-p-32 tutor-text-center">
-			<img src="<?php echo esc_url( tutor()->url . 'assets/images/empty-qa.svg' ); ?>" alt="<?php __( "No Data Available in this Section", "tutor" ); ?>" width="85%">
+		<div class="tutor-empty-state td-empty-state tutor-p-32 tutor-text-center">
+			<img src="<?php echo esc_url( tutor()->url . 'assets/images/empty-qa.svg' ); ?>" alt="<?php __( 'No Data Available in this Section', 'tutor' ); ?>" width="85%">
 			<div class="tutor-fs-6 tutor-color-secondary tutor-text-center tutor-mt-20">
-				<?php _e( "No questions yet", "tutor" ); ?>
+				<?php _e( 'No questions yet', 'tutor' ); ?>
 			</div>
 			<div class="tutor-fs-7 tutor-color-muted tutor-mt-12">
-				<?php _e( "Describe what you're trying to achieve and where you're getting stuck", "tutor" ); ?>
+				<?php _e( "Describe what you're trying to achieve and where you're getting stuck", 'tutor' ); ?>
 			</div>
 		</div>
 	</div>
-<?php endif;
+	<?php
+endif;
 
 tutor_load_template_from_custom_path(
 	tutor()->path . '/views/qna/qna-new.php',

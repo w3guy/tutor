@@ -162,10 +162,10 @@ function tutor_announcement_modal_delete( $id, $announcment_id, $row_id ) {
 					
 					<div class="tutor-d-flex tutor-justify-center tutor-my-48">
 						<button class="tutor-btn tutor-btn-outline-primary" data-tutor-modal-close>
-							<?php esc_html_e('Cancel', 'tutor'); ?>
+							<?php esc_html_e( 'Cancel', 'tutor' ); ?>
 						</button>
 						<button class="tutor-btn tutor-btn-primary tutor-list-ajax-action tutor-ml-20" data-request_data='{"announcement_id":<?php echo $announcment_id; ?>, "action":"tutor_announcement_delete"}' data-delete_element_id="<?php echo $row_id; ?>">
-							<?php esc_html_e('Yes, Delete This', 'tutor'); ?>
+							<?php esc_html_e( 'Yes, Delete This', 'tutor' ); ?>
 						</button>
 					</div>
 				</div>
@@ -192,13 +192,13 @@ $courses = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_courses(
 						</th>
 						<th width="17%">
 							<div class="tutor-fs-7 tutor-color-secondary">
-								<?php esc_html_e( 'Date', 'tutor-pro'); ?>
+								<?php esc_html_e( 'Date', 'tutor-pro' ); ?>
 							</div>
 						</th>
 					<?php else : ?>
 						<th width="17%" class="tutor-shrink">
 							<span class="tutor-fs-7 tutor-color-secondary">
-								<?php esc_html_e( 'Date', 'tutor'); ?>
+								<?php esc_html_e( 'Date', 'tutor' ); ?>
 							</span>
 						</th>
 					<?php endif; ?>
@@ -291,7 +291,7 @@ $courses = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_courses(
 								</div>
 
 								<?php
-									$course_title = isset($course->post_title)?$course->post_title:'';
+									$course_title = isset( $course->post_title ) ? $course->post_title : '';
 									tutor_announcement_modal( $update_modal_id, __( 'Edit Announcement', 'tutor' ), $courses, $announcement );
 									tutor_announcement_modal_details( $details_modal_id, $update_modal_id, $delete_modal_id, $announcement, $course_title, $date_format, $time_format );
 									tutor_announcement_modal_delete( $delete_modal_id, $announcement->ID, $row_id );
@@ -327,24 +327,24 @@ $courses = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_courses(
 		/**
 		 * Prepare pagination data & load template
 		 */
-		$limit           = tutor_utils()->get_option( 'pagination_per_page' );
-		if($the_query->found_posts > $limit) {
-			$pagination_data = array(
-				'total_items' => $the_query->found_posts,
-				'per_page'    => $limit,
-				'paged'       => $paged,
-			);
+		$limit = tutor_utils()->get_option( 'pagination_per_page' );
+	if ( $the_query->found_posts > $limit ) {
+		$pagination_data = array(
+			'total_items' => $the_query->found_posts,
+			'per_page'    => $limit,
+			'paged'       => $paged,
+		);
 
-			$pagination_template = tutor()->path . 'views/elements/pagination.php';
-			if ( is_admin() ) {
-				tutor_load_template_from_custom_path( $pagination_template, $pagination_data );
-			} else {
-				$pagination_template_frontend = tutor()->path . 'templates/dashboard/elements/pagination.php';
-				tutor_load_template_from_custom_path( $pagination_template_frontend, $pagination_data );
-			}
+		$pagination_template = tutor()->path . 'views/elements/pagination.php';
+		if ( is_admin() ) {
+			tutor_load_template_from_custom_path( $pagination_template, $pagination_data );
+		} else {
+			$pagination_template_frontend = tutor()->path . 'templates/dashboard/elements/pagination.php';
+			tutor_load_template_from_custom_path( $pagination_template_frontend, $pagination_data );
 		}
+	}
 
-		?>
+	?>
 	</div>
 
 

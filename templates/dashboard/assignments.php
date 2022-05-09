@@ -18,7 +18,7 @@ if ( ! defined( 'TUTOR_PRO_VERSION' ) ) {
 use TUTOR_ASSIGNMENTS\Assignments_List;
 
 $per_page     = tutor_utils()->get_option( 'pagination_per_page', 10 );
-$current_page = max( 1, tutor_utils()->avalue_dot( 'current_page', tutor_sanitize_data($_GET) ) );
+$current_page = max( 1, tutor_utils()->avalue_dot( 'current_page', tutor_sanitize_data( $_GET ) ) );
 $offset       = ( $current_page - 1 ) * $per_page;
 
 $course_id    = isset( $_GET['course-id'] ) ? sanitize_text_field( $_GET['course-id'] ) : '';
@@ -94,11 +94,11 @@ $courses      = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_cou
 				$submitted_url = tutor_utils()->get_tutor_dashboard_page_permalink( 'assignments/submitted' );
 				if ( is_array( $assignments->results ) && count( $assignments->results ) ) :
 					foreach ( $assignments->results as $item ) :
-					$max_mark      = tutor_utils()->get_assignment_option( $item->ID, 'total_mark' );
-					$course_id     = tutor_utils()->get_course_id_by( 'assignment', $item->ID );
-					$comment_count = Assignments_List::assignment_comment_count( $item->ID );
-					// @TODO: assign post_meta is empty if user don't click on update button (http://prntscr.com/oax4t8) but post status is publish.
-					?>
+						$max_mark      = tutor_utils()->get_assignment_option( $item->ID, 'total_mark' );
+						$course_id     = tutor_utils()->get_course_id_by( 'assignment', $item->ID );
+						$comment_count = Assignments_List::assignment_comment_count( $item->ID );
+						// @TODO: assign post_meta is empty if user don't click on update button (http://prntscr.com/oax4t8) but post status is publish.
+						?>
 						<tr>
 							<td data-th="Course Name">
 								<div class="tutor-color-black td-course tutor-fs-6 tutor-fw-medium">
@@ -141,7 +141,7 @@ $courses      = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_cou
 		</table>
 	</div>
 	<?php
-	if($assignments->count > $per_page) {
+	if ( $assignments->count > $per_page ) {
 		$pagination_data = array(
 			'total_items' => $assignments->count,
 			'per_page'    => $per_page,

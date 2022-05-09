@@ -34,7 +34,7 @@
 		foreach ( $questions as $question ) {
 			$question_i++;
 			$question_settings = maybe_unserialize( $question->question_settings );
-			$style_display = ( $question_layout_view !== 'question_below_each_other' && $question_i == 1 ) ? 'block' : 'none';
+			$style_display     = ( $question_layout_view !== 'question_below_each_other' && $question_i == 1 ) ? 'block' : 'none';
 			if ( $question_layout_view === 'question_below_each_other' ) {
 				$style_display = 'block';
 			}
@@ -50,31 +50,31 @@
 						$question_type = $question->question_type;
 
 						$rand_choice = false;
-						if ( $question_type == 'single_choice' || $question_type == 'multiple_choice' ) {
-							$choice = maybe_unserialize( $question->question_settings );
-							if ( isset( $choice['randomize_question'] ) ) {
-								$rand_choice = $choice['randomize_question'] == 1 ? true : false;
-							}
+					if ( $question_type == 'single_choice' || $question_type == 'multiple_choice' ) {
+						$choice = maybe_unserialize( $question->question_settings );
+						if ( isset( $choice['randomize_question'] ) ) {
+							$rand_choice = $choice['randomize_question'] == 1 ? true : false;
 						}
+					}
 
 						$answers            = tutor_utils()->get_answers_by_quiz_question( $question->question_id, $rand_choice );
 						$show_question_mark = (bool) tutor_utils()->avalue_dot( 'show_question_mark', $question_settings );
-						$answer_required    = (bool) tutor_utils()->array_get( 'answer_required', $question_settings );	
+						$answer_required    = (bool) tutor_utils()->array_get( 'answer_required', $question_settings );
 						echo '<div class="quiz-question-title tutor-fs-4 tutor-fw-medium tutor-color-black tutor-mb-20">';
-							if ( ! $hide_question_number_overview ) {
-								echo $question_i . '. ';
-							}
+					if ( ! $hide_question_number_overview ) {
+						echo $question_i . '. ';
+					}
 							echo stripslashes( $question->question_title );
 						echo '</div>';
 
-						if ( $show_question_mark ) {
-							echo '<p class="question-marks"> ' . __( 'Marks : ', 'tutor' ) . $question->question_mark . ' </p>';
-						}
+					if ( $show_question_mark ) {
+						echo '<p class="question-marks"> ' . __( 'Marks : ', 'tutor' ) . $question->question_mark . ' </p>';
+					}
 
 						$question_description = nl2br( stripslashes( $question->question_description ) );
-						if ( $question_description ) {
-							echo "<div class='matching-quiz-question-desc'><span class='tutor-fs-7 tutor-color-secondary'>{$question_description}</span></div>";
-						}
+					if ( $question_description ) {
+						echo "<div class='matching-quiz-question-desc'><span class='tutor-fs-7 tutor-color-secondary'>{$question_description}</span></div>";
+					}
 					?>
 					</div>
 					<!-- Quiz Answer -->
@@ -125,13 +125,13 @@
 					<?php if ( $question_layout_view !== 'question_below_each_other' ) : ?>
 						<div class="tutor-quiz-btn-group tutor-mt-60 tutor-d-flex">
 							<?php
-								if ( $show_previous_button && $previous_question ) {
-									?>
+							if ( $show_previous_button && $previous_question ) {
+								?>
 										<button type="button" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-quiz-answer-previous-btn tutor-mr-20">
 											<span class="tutor-icon-previous tutor-mr-8" area-hidden="true"></span> <?php esc_html_e( 'Back', 'tutor' ); ?>
 										</button>
 									<?php
-								}
+							}
 							?>
 							<button disabled="disabled" type="submit" class="tutor-btn tutor-btn-primary tutor-btn-md start-quiz-btn tutor-quiz-next-btn-all <?php echo $next_question ? 'tutor-quiz-answer-next-btn' : 'tutor-quiz-submit-btn'; ?>">
 								<?php $next_question ? esc_html_e( 'Submit &amp; Next', 'tutor' ) : esc_html_e( 'Submit Quiz', 'tutor' ); ?>

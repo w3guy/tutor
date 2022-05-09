@@ -30,7 +30,7 @@
 					'context'      => 'frontend-dashboard-students-attempts',
 				)
 			);
-		?>
+			?>
 	</div>
 
 	<?php
@@ -44,5 +44,5 @@
 			tutor()->path . 'views/quiz/instructor-feedback.php',
 			array( 'attempt_data' => $attempt_data )
 		);
-	?>
+		?>
 </div>

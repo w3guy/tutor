@@ -14,17 +14,17 @@
 					</span>
 				</div>
 				<?php
-			}
+		}
 		?>
 		<div class="quiz-total-attempt tutor-d-flex d-xs-none">
 			<span class="tutor-fs-6 tutor-color-muted tutor-mr-12">Total <?php esc_html_e( 'Attempted', 'tutor' ); ?>:</span>
 			<span class="tutor-fs-6 tutor-fw-bold tutor-color-secondary">
 			<?php
-				if ( 0 != $attempts_allowed ) {
-					if ( $attempted_count ) {
-						echo esc_html( $attempted_count ) . '/';
-					}
+			if ( 0 != $attempts_allowed ) {
+				if ( $attempted_count ) {
+					echo esc_html( $attempted_count ) . '/';
 				}
+			}
 				echo 0 == $attempts_allowed ? esc_html__( 'No limit', 'tutor' ) : esc_html( $attempts_allowed );
 			?>
 			</span>
@@ -55,7 +55,7 @@
 				</div>
 				
 				<span id="tutor-quiz-time-update" 
-					class="tutor-fs-6 tutor-fw-medium tutor-text-nowrap <?php  $remaining_time_secs < 0 ? 'color-text-error' : ''; ?>" 
+					class="tutor-fs-6 tutor-fw-medium tutor-text-nowrap <?php $remaining_time_secs < 0 ? 'color-text-error' : ''; ?>" 
 					data-attempt-settings="<?php echo esc_attr( json_encode( $is_started_quiz ) ); ?>" 
 					data-attempt-meta="<?php echo esc_attr( json_encode( $quiz_attempt_info ) ); ?>" 
 					data-quiz-duration="<?php echo esc_attr( tutor_utils()->quiz_time_duration_in_seconds( $quiz_time_type, $quiz_time_value ) ); ?>">

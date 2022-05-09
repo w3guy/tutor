@@ -1,8 +1,8 @@
 <?php
 use TUTOR\Input;
 
-$question_id	= Input::get( 'question_id', 0, Input::TYPE_INT );
-$question		= tutor_utils()->get_qa_question( $question_id );
+$question_id = Input::get( 'question_id', 0, Input::TYPE_INT );
+$question    = tutor_utils()->get_qa_question( $question_id );
 ?>
 
 <div class="wrap">

@@ -1,11 +1,11 @@
 <?php
 /**
-* Welcome page template
-*
-* @package Tutor\Welcome
-*
-* @since v2.0.0
-*/
+ * Welcome page template
+ *
+ * @package Tutor\Welcome
+ *
+ * @since v2.0.0
+ */
 
 $image_url = 'https://api.tutorlms.com/wp-json/restapi/v1/tutor-assets/welcome';
 ?>
@@ -62,7 +62,7 @@ $image_url = 'https://api.tutorlms.com/wp-json/restapi/v1/tutor-assets/welcome';
 							<div class="tutor-fs-6 tutor-color-secondary">Get great improvements to the dashboard offering a more intuitive, organized, and modern approach.</div>
 						</div>
 						<div>
-							<img class="tutor-img-responsive" src="<?php echo esc_url($image_url); ?>/dashboard.png" srcset="<?php echo esc_url($image_url); ?>/dashboard-2x.png 2x" alt="Dashboard" loading="lazy">
+							<img class="tutor-img-responsive" src="<?php echo esc_url( $image_url ); ?>/dashboard.png" srcset="<?php echo esc_url( $image_url ); ?>/dashboard-2x.png 2x" alt="Dashboard" loading="lazy">
 						</div>
 					</div>
 				</div>
@@ -72,7 +72,7 @@ $image_url = 'https://api.tutorlms.com/wp-json/restapi/v1/tutor-assets/welcome';
 						<div class="tutor-row tutor-align-center">
 							<div class="tutor-col-lg-6 tutor-d-flex tutor-justify-center tutor-d-xl-block">
 								<div>
-									<img class="tutor-img-responsive" src="<?php echo esc_url($image_url); ?>/design-system.png" srcset="<?php echo esc_url($image_url); ?>/design-system-2x.png 2x" alt="Unified Design" loading="lazy">
+									<img class="tutor-img-responsive" src="<?php echo esc_url( $image_url ); ?>/design-system.png" srcset="<?php echo esc_url( $image_url ); ?>/design-system-2x.png 2x" alt="Unified Design" loading="lazy">
 								</div>
 							</div>
 							<div class="tutor-col-lg-6">
@@ -86,7 +86,7 @@ $image_url = 'https://api.tutorlms.com/wp-json/restapi/v1/tutor-assets/welcome';
 						<div class="tutor-row tutor-align-center">
 							<div class="tutor-col-lg-6 tutor-d-flex tutor-justify-center tutor-d-xl-block">
 								<div>
-									<img class="tutor-img-responsive" src="<?php echo esc_url($image_url); ?>/analytics.png" srcset="<?php echo esc_url($image_url); ?>/analytics-2x.png 2x" alt="Analytics" loading="lazy">
+									<img class="tutor-img-responsive" src="<?php echo esc_url( $image_url ); ?>/analytics.png" srcset="<?php echo esc_url( $image_url ); ?>/analytics-2x.png 2x" alt="Analytics" loading="lazy">
 								</div>
 							</div>
 							<div class="tutor-col-lg-6">
@@ -128,7 +128,7 @@ $image_url = 'https://api.tutorlms.com/wp-json/restapi/v1/tutor-assets/welcome';
 						</div>
 					</div>
 					<div class="tutor-col-lg-7 tutor-col-xl-8 tutor-d-none tutor-d-lg-block">
-						<img class="tutor-img-responsive" src="<?php echo esc_url($image_url); ?>/email-templates.png" srcset="<?php echo esc_url($image_url); ?>/email-templates-2x.png 2x" alt="Email Templates" loading="lazy">
+						<img class="tutor-img-responsive" src="<?php echo esc_url( $image_url ); ?>/email-templates.png" srcset="<?php echo esc_url( $image_url ); ?>/email-templates-2x.png 2x" alt="Email Templates" loading="lazy">
 					</div>
 				</div>
 			</div>
@@ -143,7 +143,7 @@ $image_url = 'https://api.tutorlms.com/wp-json/restapi/v1/tutor-assets/welcome';
 						<div class="tutor-row">
 							<div class="tutor-col-xl-6 tutor-d-flex tutor-justify-center tutor-d-xl-block">
 								<div>
-									<img class="tutor-img-responsive" src="<?php echo esc_url($image_url); ?>/notifications.png" srcset="<?php echo esc_url($image_url); ?>/notifications-2x.png 2x" alt="Notifications" loading="lazy">
+									<img class="tutor-img-responsive" src="<?php echo esc_url( $image_url ); ?>/notifications.png" srcset="<?php echo esc_url( $image_url ); ?>/notifications-2x.png 2x" alt="Notifications" loading="lazy">
 								</div>
 							</div>
 	

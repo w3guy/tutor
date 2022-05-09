@@ -12,7 +12,7 @@
  * @version 1.4.3
  */
 
-if ( ! tutor_utils()->is_instructor(0, true) ) {
+if ( ! tutor_utils()->is_instructor( 0, true ) ) {
 	include __DIR__ . '/reviews/given-reviews.php';
 	return;
 }
@@ -120,8 +120,8 @@ $given_count = tutor_utils()->get_reviews_by_user( 0, 0, 0, true )->count;
 <?php
 
 
-if($reviews->count > $per_page) {
-	$pagination_data = array(
+if ( $reviews->count > $per_page ) {
+	$pagination_data              = array(
 		'total_items' => $reviews->count,
 		'per_page'    => $per_page,
 		'paged'       => $current_page,

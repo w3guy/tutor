@@ -1,6 +1,6 @@
 <?php
 $args        = $this->args;
-$current_tab = tutils()->array_get( 'settings_tab', tutor_sanitize_data($_GET) );
+$current_tab = tutils()->array_get( 'settings_tab', tutor_sanitize_data( $_GET ) );
 
 ?>
 
@@ -40,8 +40,8 @@ $current_tab = tutils()->array_get( 'settings_tab', tutor_sanitize_data($_GET) )
 					}
 
 					echo '<li class="' . esc_attr( $active ) . '">
-							<a href="' . esc_url( $url ) . '" data-target="#settings-tab-' . esc_attr( $key ) . '">' . 
-								$icon . ' ' . $label . 
+							<a href="' . esc_url( $url ) . '" data-target="#settings-tab-' . esc_attr( $key ) . '">' .
+								$icon . ' ' . $label .
 							'</a>
 						</li>';
 				}

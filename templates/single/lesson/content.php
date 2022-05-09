@@ -30,10 +30,10 @@ $next_id     = $contents->next_id;
 
 $prev_is_preview = get_post_meta( $previous_id, '_is_preview', true );
 $next_is_preview = get_post_meta( $next_id, '_is_preview', true );
-$is_enrolled = tutor_utils()->is_enrolled( $course_id );
+$is_enrolled     = tutor_utils()->is_enrolled( $course_id );
 
-$prev_is_locked = !($is_enrolled || $prev_is_preview);
-$next_is_locked = !($is_enrolled || $next_is_preview);
+$prev_is_locked = ! ( $is_enrolled || $prev_is_preview );
+$next_is_locked = ! ( $is_enrolled || $next_is_preview );
 
 // Get total content count
 $course_stats = tutor_utils()->get_course_completed_percent( $course_id, 0, true );
@@ -154,7 +154,7 @@ $is_enrolled        = tutor_utils()->is_enrolled( $course_id );
 <input type="hidden" id="tutor_video_tracking_information" value="<?php echo esc_attr( json_encode( $jsonData ) ); ?>">
 <div class="tutor-video-player-wrapper">
 	<?php tutor_lesson_video(); ?>
-	<?php if($previous_id): ?>
+	<?php if ( $previous_id ) : ?>
 		<div class="tutor-single-course-content-prev tutor-d-flex tutor-align-center">
 			<a href="<?php echo $prev_is_locked ? '#' : get_the_permalink( $previous_id ); ?>">
 				<span class="tutor-icon-angle-left" area-hidden="true"></span>
@@ -162,7 +162,7 @@ $is_enrolled        = tutor_utils()->is_enrolled( $course_id );
 		</div>
 	<?php endif; ?>
 
-	<?php if($next_id): ?>
+	<?php if ( $next_id ) : ?>
 		<div class="tutor-single-course-content-next tutor-d-flex tutor-align-center">
 			<a href="<?php echo $next_is_locked ? '#' : get_the_permalink( $next_id ); ?>">
 				<span class="tutor-icon-angle-right" area-hidden="true"></span>
@@ -188,29 +188,29 @@ $page_tab = isset( $_GET['page_tab'] ) ? esc_attr( $_GET['page_tab'] ) : ( isset
 
 <div class="tutor-course-spotlight-wrapper">
 	<ul class="tutor-nav tutor-course-spotlight-nav tutor-justify-center">
-        <li class="tutor-nav-item">
-            <a href="#" class="tutor-nav-link<?php echo ( ! isset( $page_tab ) || 'overview' == $page_tab ) ? ' is-active' : ''; ?>" data-tutor-nav-target="tutor-course-spotlight-overview" data-tutor-query-variable="page_tab" data-tutor-query-value="overview">
+		<li class="tutor-nav-item">
+			<a href="#" class="tutor-nav-link<?php echo ( ! isset( $page_tab ) || 'overview' == $page_tab ) ? ' is-active' : ''; ?>" data-tutor-nav-target="tutor-course-spotlight-overview" data-tutor-query-variable="page_tab" data-tutor-query-value="overview">
 				<span class="tutor-icon-document-text tutor-mr-8" area-hidden="true"></span>
 				<span><?php _e( 'Overview', 'tutor' ); ?></span>
 			</a>
-        </li>
+		</li>
 
-        <li class="tutor-nav-item">
-            <a href="#" class="tutor-nav-link<?php echo 'files' == $page_tab ? ' is-active' : ''; ?>" data-tutor-nav-target="tutor-course-spotlight-files" data-tutor-query-variable="page_tab" data-tutor-query-value="files">
+		<li class="tutor-nav-item">
+			<a href="#" class="tutor-nav-link<?php echo 'files' == $page_tab ? ' is-active' : ''; ?>" data-tutor-nav-target="tutor-course-spotlight-files" data-tutor-query-variable="page_tab" data-tutor-query-value="files">
 				<span class="tutor-icon-paperclip tutor-mr-8" area-hidden="true"></span>
 				<span><?php _e( 'Exercise Files', 'tutor' ); ?></span>
 			</a>
-        </li>
+		</li>
 
 		<?php if ( $is_comment_enabled ) : ?>
 		<li class="tutor-nav-item">
-            <a href="#" class="tutor-nav-link<?php echo 'comments' == $page_tab ? ' is-active' : ''; ?>" data-tutor-nav-target="tutor-course-spotlight-comments" data-tutor-query-variable="page_tab" data-tutor-query-value="comments">
+			<a href="#" class="tutor-nav-link<?php echo 'comments' == $page_tab ? ' is-active' : ''; ?>" data-tutor-nav-target="tutor-course-spotlight-comments" data-tutor-query-variable="page_tab" data-tutor-query-value="comments">
 				<span class="tutor-icon-comment tutor-mr-8" area-hidden="true"></span>
 				<span><?php _e( 'Comments', 'tutor' ); ?></span>
 			</a>
-        </li>
+		</li>
 		<?php endif; ?>
-    </ul>
+	</ul>
 
 	<div class="tutor-tab tutor-course-spotlight-tab">
 		<div id="tutor-course-spotlight-overview" class="tutor-tab-item<?php echo ( ! isset( $page_tab ) || 'overview' == $page_tab ) ? ' is-active' : ''; ?>">

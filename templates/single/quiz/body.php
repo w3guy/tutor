@@ -5,14 +5,14 @@
 	 */
 
 	global $post;
-	$currentPost     = $post;
-	$course          = tutor_utils()->get_course_by_quiz( get_the_ID() );
-	$quiz_id         = get_the_ID();
-	$quiz_details    = tutor_utils()->get_quiz_option( $quiz_id );
-	$quiz_time_limit = ( isset( $quiz_details['time_limit'] ) && is_array( $quiz_details['time_limit'] ) ) ? $quiz_details['time_limit'] : array();
-	$quiz_time_value = isset( $quiz_time_limit['time_value'] ) ? $quiz_time_limit['time_value'] : 0;
-	$quiz_time_type  = isset( $quiz_time_limit['time_type'] ) ? $quiz_time_limit['time_type'] : 'minutes';
-	$is_started_quiz = tutor_utils()->is_started_quiz();
+	$currentPost       = $post;
+	$course            = tutor_utils()->get_course_by_quiz( get_the_ID() );
+	$quiz_id           = get_the_ID();
+	$quiz_details      = tutor_utils()->get_quiz_option( $quiz_id );
+	$quiz_time_limit   = ( isset( $quiz_details['time_limit'] ) && is_array( $quiz_details['time_limit'] ) ) ? $quiz_details['time_limit'] : array();
+	$quiz_time_value   = isset( $quiz_time_limit['time_value'] ) ? $quiz_time_limit['time_value'] : 0;
+	$quiz_time_type    = isset( $quiz_time_limit['time_type'] ) ? $quiz_time_limit['time_type'] : 'minutes';
+	$is_started_quiz   = tutor_utils()->is_started_quiz();
 	$previous_attempts = tutor_utils()->quiz_attempts();
 	$attempted_count   = is_array( $previous_attempts ) ? count( $previous_attempts ) : 0;
 	$questions_order   = tutor_utils()->get_quiz_option( $quiz_id, 'questions_order', 'rand' );
@@ -36,8 +36,8 @@ if ( $attempted_count !== 0 ) {
 			$question_layout_view                           = tutor_utils()->get_quiz_option( $quiz_id, 'question_layout_view' );
 			! $question_layout_view ? $question_layout_view = 'single_question' : 0;
 
-			$hide_quiz_time_display        = (bool) tutor_utils()->get_quiz_option($quiz_id, 'hide_quiz_time_display');
-			$hide_question_number_overview = (bool) tutor_utils()->get_quiz_option($quiz_id, 'hide_question_number_overview');
+			$hide_quiz_time_display        = (bool) tutor_utils()->get_quiz_option( $quiz_id, 'hide_quiz_time_display' );
+			$hide_question_number_overview = (bool) tutor_utils()->get_quiz_option( $quiz_id, 'hide_question_number_overview' );
 
 			$remaining_time_secs = ( strtotime( $is_started_quiz->attempt_started_at ) + $time_limit_seconds ) - strtotime( $quiz_attempt_info['date_time_now'] );
 

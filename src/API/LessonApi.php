@@ -1,0 +1,67 @@
+<?php
+namespace Tutor\API;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+use WP_REST_Request;
+use Tutor\Core\Traits\ApiResponse;
+
+/**
+ * Class LessonApi
+ *
+ * @author: themeum
+ * @link: https://themeum.com
+ * @package tutor
+ */
+class LessonApi {
+	use ApiResponse;
+
+	private $post_type;
+	private $post_parent;
+
+	public function __construct() {
+		$this->post_type = tutor()->lesson_post_type;
+	}
+
+	/**
+	 * Get lesson data by ID
+	 *
+	 * @param WP_REST_Request $request
+	 * @return mixed
+	 */
+	public function topic_lesson( WP_REST_Request $request ) {
+		$this->post_parent = $request->get_param( 'id' );
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'posts';
+
+		$lessons = $wpdb->get_results(
+			$wpdb->prepare( "SELECT ID, post_title, post_content, post_name, (SELECT post_parent from {$table} WHERE ID = {$this->post_parent} ) as course_id FROM $table WHERE post_type = %s AND post_parent = %d", $this->post_type, $this->post_parent )
+		);
+
+		$data = array();
+
+		if ( count( $lessons ) > 0 ) {
+			foreach ( $lessons as $lesson ) {
+				$attachments    = array();
+				$attachments_id = get_post_meta( $lesson->ID, '_tutor_attachments', false );
+				$attachments_id = $attachments_id[0];
+				foreach ( $attachments_id as $id ) {
+					$guid = get_the_guid( $id );
+					array_push( $attachments, $guid );
+				}
+
+				$lesson->attachments = $attachments;
+				$lesson->thumbnail   = get_the_post_thumbnail_url( $lesson->ID );
+				$lesson->video       = get_post_meta( $lesson->ID, '_video', false );
+				array_push( $data, $lesson );
+			}
+
+			return $this->api_data( $data );
+		}
+
+		return $this->api_fail( __( 'Lesson not found for given topic ID', 'tutor' ) );
+	}
+}

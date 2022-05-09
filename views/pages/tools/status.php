@@ -181,8 +181,8 @@
 					<td data-export-label="SUHOSIN Installed"><?php esc_html_e( 'SUHOSIN installed', 'tutor' ); ?>:</td>
 					<td class="help"><?php echo tutor_utils()->help_tip( esc_html__( 'Suhosin is an advanced protection system for PHP installations. It was designed to protect your servers on the one hand against a number of well known problems in PHP applications and on the other hand against potential unknown vulnerabilities within these applications or the PHP core itself. If enabled on your server, Suhosin may need to be configured to increase its data submission limits.', 'tutor' ) ); ?></td>
 					<td>
-						<?php 
-							echo $environment['suhosin_installed'] ? '<span class="dashicons dashicons-yes"></span>' : '&ndash;'; 
+						<?php
+							echo $environment['suhosin_installed'] ? '<span class="dashicons dashicons-yes"></span>' : '&ndash;';
 						?>
 					</td>
 				</tr>
@@ -200,8 +200,8 @@
 						if ( version_compare( $environment['mysql_version'], '5.6', '<' ) && ! strstr( $environment['mysql_version_string'], 'MariaDB' ) ) {
 							/* Translators: %1$s: MySQL version, %2$s: Recommended MySQL version. */
 							echo '<mark class="error">
-									<span class="dashicons dashicons-warning"></span> ' . 
-									sprintf( esc_html__( '%1$s - We recommend a minimum MySQL version of 5.6. See: %2$s', 'tutor' ), esc_html( $environment['mysql_version_string'] ), '<a href="https://wordpress.org)/about/requirements/" target="_blank">' . esc_html__( 'WordPress requirements', 'tutor' ) . '</a>' ) . 
+									<span class="dashicons dashicons-warning"></span> ' .
+									sprintf( esc_html__( '%1$s - We recommend a minimum MySQL version of 5.6. See: %2$s', 'tutor' ), esc_html( $environment['mysql_version_string'] ), '<a href="https://wordpress.org)/about/requirements/" target="_blank">' . esc_html__( 'WordPress requirements', 'tutor' ) . '</a>' ) .
 								'</mark>';
 						} else {
 							echo '<mark class="yes">' . esc_html( $environment['mysql_version_string'] ) . '</mark>';
@@ -238,8 +238,8 @@
 						echo '<mark class="yes"><span class="dashicons dashicons-yes"></span></mark>';
 					} else {
 						echo '<mark class="error">
-							<span class="dashicons dashicons-warning"></span> ' . 
-							esc_html__( 'Your server does not have fsockopen or cURL enabled - PayPal IPN and other scripts which communicate with other servers will not work. Contact your hosting provider.', 'tutor' ) . 
+							<span class="dashicons dashicons-warning"></span> ' .
+							esc_html__( 'Your server does not have fsockopen or cURL enabled - PayPal IPN and other scripts which communicate with other servers will not work. Contact your hosting provider.', 'tutor' ) .
 						'</mark>';
 					}
 					?>
@@ -255,8 +255,8 @@
 					} else {
 						/* Translators: %s: classname and link. */
 						echo '<mark class="error">
-							<span class="dashicons dashicons-warning"></span> ' . 
-							sprintf( esc_html__( 'Your server does not have the %s class enabled - HTML/Multipart emails, and also some extensions, will not work without DOMDocument.', 'tutor' ), '<a href="https://php.net/manual/en/class.domdocument.php">DOMDocument</a>' ) . 
+							<span class="dashicons dashicons-warning"></span> ' .
+							sprintf( esc_html__( 'Your server does not have the %s class enabled - HTML/Multipart emails, and also some extensions, will not work without DOMDocument.', 'tutor' ), '<a href="https://php.net/manual/en/class.domdocument.php">DOMDocument</a>' ) .
 						'</mark>';
 					}
 					?>
@@ -272,8 +272,8 @@
 					} else {
 						/* Translators: %s: classname and link. */
 						echo '<mark class="error">
-							<span class="dashicons dashicons-warning"></span> ' . 
-							sprintf( esc_html__( 'Your server does not support the %s function - this is required to use the GeoIP database from MaxMind.', 'tutor' ), '<a href="https://php.net/manual/en/zlib.installation.php">gzopen</a>' ) . 
+							<span class="dashicons dashicons-warning"></span> ' .
+							sprintf( esc_html__( 'Your server does not support the %s function - this is required to use the GeoIP database from MaxMind.', 'tutor' ), '<a href="https://php.net/manual/en/zlib.installation.php">gzopen</a>' ) .
 						'</mark>';
 					}
 					?>
@@ -291,8 +291,8 @@
 					} else {
 						/* Translators: %s: classname and link. */
 						echo '<mark class="error">
-								<span class="dashicons dashicons-warning"></span> ' . 
-								sprintf( esc_html__( 'Your server does not support the %s functions - this is required for better character encoding. Some fallbacks will be used instead for it.', 'tutor' ), '<a href="https://php.net/manual/en/mbstring.installation.php">mbstring</a>' ) . 
+								<span class="dashicons dashicons-warning"></span> ' .
+								sprintf( esc_html__( 'Your server does not support the %s functions - this is required for better character encoding. Some fallbacks will be used instead for it.', 'tutor' ), '<a href="https://php.net/manual/en/mbstring.installation.php">mbstring</a>' ) .
 							'</mark>';
 					}
 					?>

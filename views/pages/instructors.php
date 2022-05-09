@@ -2,80 +2,12 @@
 /**
  * Instructors List Template.
  *
- * @package Instructors List
+ * @package Tutor
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-use TUTOR\Input;
-use TUTOR\Instructors_List;
-
-if ( Input::has( 'sub_page' ) )  {
-	$page = Input::get( 'sub_page' );
-	include_once tutor()->path . "views/pages/{$page}.php";
-	return;
-}
-
-$instructors = new Instructors_List();
-
-/**
- * Short able params
- */
-$user_id   = Input::get( 'user_id', '' );
-$course_id = Input::get( 'course-id', '' );
-$order     = Input::get( 'order', 'DESC' );
-$date      = Input::get( 'date', '' );
-$search    = Input::get( 'search', '' );
-
-/**
- * Determine active tab
- */
-$active_tab = Input::get( 'data', 'all' );
-
-/**
- * Pagination data
- */
-$paged    = Input::get( 'paged', 1, Input::TYPE_INT );
-$per_page = tutor_utils()->get_option( 'pagination_per_page' );
-$offset   = ( $per_page * $paged ) - $per_page;
-
-// Available status for instructor.
-$instructor_status = array( 'approved', 'pending', 'blocked' );
-if ( 'pending' === $active_tab ) {
-	$instructor_status = array( 'pending' );
-} elseif ( 'blocked' === $active_tab ) {
-	$instructor_status = array( 'blocked' );
-} elseif ( 'approved' == $active_tab ) {
-	$instructor_status = array( 'approved' );
-}
-$instructors_list = tutor_utils()->get_instructors( $offset, $per_page, $search, $course_id, $date, $order, $instructor_status );
-$total            = tutor_utils()->get_total_instructors( $search, $instructor_status, $course_id, $date );
-
-/**
- * Navbar data to make nav menu
- */
-$url               = get_pagenum_link();
-$add_insructor_url = $url . '&sub_page=add_new_instructor';
-$navbar_data       = array(
-	'page_title'   => $instructors->page_title,
-	'tabs'         => $instructors->tabs_key_value( $search, $course_id, $date ),
-	'active'       => $active_tab,
-	'add_button'   => true,
-	'button_title' => __( 'Add New', 'tutor' ),
-	'button_url'   => $add_insructor_url,
-	'modal_target' => 'tutor-instructor-add-new',
-);
-
-$filters = array(
-	'bulk_action'   => $instructors->bulk_action,
-	'bulk_actions'  => $instructors->prpare_bulk_actions(),
-	'ajax_action'   => 'tutor_instructor_bulk_action',
-	'filters'       => true,
-	'course_filter' => true,
-);
-
 ?>
 
 <div class="tutor-admin-wrap">
@@ -92,7 +24,7 @@ $filters = array(
 			'approved' => array( __( 'Approved', 'tutor' ), 'select-success' ),
 			'blocked'  => array( __( 'Blocked', 'tutor' ), 'select-danger' ),
 		);
-	?>
+		?>
 	<div class="tutor-admin-body">
 		<div class="tutor-table-responsive tutor-mt-32">
 			<table class="tutor-table tutor-table-responsive table-instructors tutor-table-with-checkbox">
@@ -169,7 +101,7 @@ $filters = array(
 								</td>
 								<td data-th="<?php esc_html_e( 'Total Course', 'tutor' ); ?>">
 									<span class="tutor-color-black tutor-fs-7">
-								<?php echo esc_html( $instructors->column_total_course( $list, 'total_course' ) ); ?>
+								<?php echo esc_html( $instructor_ctrl->column_total_course( $list, 'total_course' ) ); ?>
 									</span>
 								</td>
 								<td data-th="<?php esc_html_e( 'Commission Rate', 'tutor' ); ?>">
@@ -228,18 +160,18 @@ $filters = array(
 
 <div id="tutor-instructor-add-new" class="tutor-modal tutor-modal-scrollable">
   <div class="tutor-modal-overlay"></div>
-  	<div class="tutor-modal-window">
+	  <div class="tutor-modal-window">
 		<form id="tutor-new-instructor-form" class="tutor-modal-content" autocomplete="off" method="post">
-	 		<div class="tutor-modal-header">
+			 <div class="tutor-modal-header">
 				<div class="tutor-modal-title">
 					<?php esc_html_e( 'Add New Instructor', 'tutor' ); ?>
 				</div>
 				<button class="tutor-iconic-btn tutor-modal-close" data-tutor-modal-close>
 					<span class="tutor-icon-times" area-hidden="true"></span>
 				</button>
-	  		</div>
+			  </div>
 
-		  	<div class="tutor-modal-body">
+			  <div class="tutor-modal-body">
 				<?php tutor_nonce_field(); ?>
 				<?php do_action( 'tutor_add_new_instructor_form_fields_before' ); ?>
 				<div class="tutor-rows">
@@ -339,7 +271,7 @@ $filters = array(
 				</button>
 			</div>
 		</form>
-  	</div>
+	  </div>
 </div>
 <?php
 /**
@@ -348,11 +280,12 @@ $filters = array(
  *
  * @since v2.0.0
  */
-$instructor_id       = isset( $_GET['instructor'] ) ? sanitize_text_field( $_GET['instructor'] ) : '';
-$prompt_action       = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : '';
-$instructor_data 	 = get_userdata( $instructor_id );
+$instructor_id   = isset( $_GET['instructor'] ) ? sanitize_text_field( $_GET['instructor'] ) : '';
+$prompt_action   = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : '';
+$instructor_data = get_userdata( $instructor_id );
 
-if ( $instructor_data && ( 'approved' === $prompt_action || 'blocked' === $prompt_action ) ) : ?>
+if ( $instructor_data && ( 'approved' === $prompt_action || 'blocked' === $prompt_action ) ) :
+	?>
 	<?php $instructor_status = tutor_utils()->instructor_status( $instructor_data->ID, false ); ?>
 	<div id="tutor-ins-approval-1" class="tutor-modal tutor-modal-ins-approval tutor-is-active">
 		<div class="tutor-modal-overlay"></div>

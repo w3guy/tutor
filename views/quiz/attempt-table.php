@@ -1,15 +1,15 @@
 <?php
 	extract( $data ); // $attempt_list, $context;
-	
+
 	$page_key      = 'attempt-table';
 	$table_columns = include __DIR__ . '/contexts.php';
 
-	if ( $context == 'course-single-previous-attempts' && is_array( $attempt_list ) && count( $attempt_list ) ) {
-		// Provide the attempt data from the first attempt
-		// For now now attempt specific data is shown, that's why no problem if we take meta data from any atttempt.
-		$attempt_data = $attempt_list[0];
-		include __DIR__ . '/header.php';
-	}
+if ( $context == 'course-single-previous-attempts' && is_array( $attempt_list ) && count( $attempt_list ) ) {
+	// Provide the attempt data from the first attempt
+	// For now now attempt specific data is shown, that's why no problem if we take meta data from any atttempt.
+	$attempt_data = $attempt_list[0];
+	include __DIR__ . '/header.php';
+}
 ?>
 
 <div class="tutor-table-wrapper tutor-my-24">
@@ -18,13 +18,13 @@
 		<thead>
 			<tr>
 				<?php
-					foreach ( $table_columns as $key => $column ) {
-						echo '<th>
+				foreach ( $table_columns as $key => $column ) {
+					echo '<th>
 								<div class="tutor-fs-7 tutor-color-secondary">
 									' . $column . '
 								</div>
 							</th>';
-					}
+				}
 				?>
 			</tr>
 		</thead>
@@ -37,14 +37,19 @@
 					$earned_percentage = $attempt->earned_marks > 0 ? ( number_format( ( $attempt->earned_marks * 100 ) / $attempt->total_marks ) ) : 0;
 					$answers           = tutor_utils()->get_quiz_answers_by_attempt_id( $attempt->attempt_id );
 
-					$attempt_info 	   = @unserialize($attempt->attempt_info);
-					$attempt_info	   = !is_array($attempt_info) ? array() : $attempt_info;
-					$passing_grade	   = isset($attempt_info['passing_grade']) ? (int)$attempt_info['passing_grade'] : 0;
+					$attempt_info  = @unserialize( $attempt->attempt_info );
+					$attempt_info  = ! is_array( $attempt_info ) ? array() : $attempt_info;
+					$passing_grade = isset( $attempt_info['passing_grade'] ) ? (int) $attempt_info['passing_grade'] : 0;
 
-					$ans_array = is_array($answers) ? $answers : array();
-					$has_pending = count(array_filter($ans_array, function($ans){
-						return $ans->is_correct===null;
-					}));
+					$ans_array   = is_array( $answers ) ? $answers : array();
+					$has_pending = count(
+						array_filter(
+							$ans_array,
+							function( $ans ) {
+								return $ans->is_correct === null;
+							}
+						)
+					);
 
 					$correct   = 0;
 					$incorrect = 0;
@@ -52,7 +57,7 @@
 						foreach ( $answers as $answer ) {
 							if ( (bool) $answer->is_correct ) {
 								$correct++;
-							} else if(!($answer->is_correct===null)) {
+							} elseif ( ! ( $answer->is_correct === null ) ) {
 								$incorrect++;
 							}
 						}
@@ -102,22 +107,23 @@
 															$attempt_user = get_userdata( $attempt->user_id );
 															$user_name    = $attempt_user ? $attempt_user->display_name : '';
 
-														?>
+															?>
 																<div>
 																	<span class="tutor-fs-7 tutor-color-secondary">
 																		<?php _e( 'Student', 'tutor' ); ?>
 																	</span>: <span class="tutor-fs-7 tutor-fw-medium"> <?php echo $user_name; ?> </span>
 																</div>
-														<?php
+															<?php
 														} else {
-														?>
-															<?php if(!empty($user_name) && isset( $attempt->user_email ) ) : ?>
+															?>
+															<?php if ( ! empty( $user_name ) && isset( $attempt->user_email ) ) : ?>
 																<span class="tutor-fs-7 tutor-color-secondary"><?php esc_html_e( 'Student', 'tutor' ); ?>: </span>
 																<span class="tutor-color-secondary tutor-fs-8 tutor-fw-medium" title="<?php echo esc_attr( $attempt->user_email ); ?>">
-																	<?php echo esc_attr( isset($attempt->display_name) ? $attempt->display_name : $user_name ); ?>
+																	<?php echo esc_attr( isset( $attempt->display_name ) ? $attempt->display_name : $user_name ); ?>
 																</span>
 
-															<?php endif;
+																<?php
+															endif;
 														}
 														?>
 													</div>
@@ -152,7 +158,7 @@
 									?>
 											<td data-th="<?php echo $column; ?>">
 												<span class="tutor-fs-7 tutor-fw-medium tutor-color-black">
-													<?php echo round($attempt->total_marks); ?>
+													<?php echo round( $attempt->total_marks ); ?>
 												</span>
 											</td>
 										<?php
@@ -182,7 +188,7 @@
 									?>
 											<td data-th="<?php echo $column; ?>">
 												<span class="tutor-fs-7 tutor-fw-medium tutor-color-black">
-													<?php echo round($attempt->earned_marks) . ' (' . $earned_percentage . '% )'; ?>
+													<?php echo round( $attempt->earned_marks ) . ' (' . $earned_percentage . '% )'; ?>
 												</span>
 											</td>
 										<?php
@@ -192,13 +198,13 @@
 									?>
 										<td data-th="<?php echo $column; ?>">
 											<?php
-												if($has_pending){
-													echo '<span class="tutor-badge-label label-warning">'.__('Pending', 'tutor').'</span>';
-												} else {
-													echo $earned_percentage >= $passing_grade ?
-														'<span class="tutor-badge-label label-success">' . __( 'Pass', 'tutor' ) . '</span>' :
-														'<span class="tutor-badge-label label-danger">' . __( 'Fail', 'tutor' ) . '</span>';
-												}
+											if ( $has_pending ) {
+												echo '<span class="tutor-badge-label label-warning">' . __( 'Pending', 'tutor' ) . '</span>';
+											} else {
+												echo $earned_percentage >= $passing_grade ?
+													'<span class="tutor-badge-label label-success">' . __( 'Pass', 'tutor' ) . '</span>' :
+													'<span class="tutor-badge-label label-danger">' . __( 'Fail', 'tutor' ) . '</span>';
+											}
 											?>
 										</td>
 									<?php
@@ -211,11 +217,11 @@
 											<div class="tutor-d-inline-flex tutor-align-center td-action-btns">
 												<a href="<?php echo $url; ?>" class="tutor-btn tutor-btn-outline-primary tutor-btn-sm">
 													<?php
-														if ( $has_pending && ( $context == 'frontend-dashboard-students-attempts' || $context == 'backend-dashboard-students-attempts' ) ) {
-															esc_html_e( 'Review', 'tutor' );
-														} else {
-															esc_html_e( 'Details', 'tutor-pro' );
-														}
+													if ( $has_pending && ( $context == 'frontend-dashboard-students-attempts' || $context == 'backend-dashboard-students-attempts' ) ) {
+														esc_html_e( 'Review', 'tutor' );
+													} else {
+														esc_html_e( 'Details', 'tutor-pro' );
+													}
 													?>
 												</a>
 											</div>

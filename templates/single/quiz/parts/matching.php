@@ -2,7 +2,8 @@
 	<div class="matching-quiz-question-desc tutor-d-flex tutor-align-start">
 		<?php
 			$rand_answers = tutor_utils()->get_answers_by_quiz_question( $question->question_id, true );
-		foreach ( $rand_answers as $rand_answer ) { ?>
+		foreach ( $rand_answers as $rand_answer ) {
+			?>
 			<div class="" style="display:flex; flex-direction: column; row-gap: 10px;">
 				<div class="tutor-draggable">
 					<div class="tutor-quiz-border-box" draggable="true">
@@ -35,7 +36,8 @@
 	if ( is_array( $answers ) && count( $answers ) ) {
 		$answer_i = 0;
 		foreach ( $answers as $answer ) {
-			$answer_i++; ?>
+			$answer_i++;
+			?>
 			<div class="quiz-matching-ans">
 				<div class="tutor-quiz-ans-no  tutor-fs-6 tutor-fw-medium  tutor-color-black">
 					<?php

@@ -19,7 +19,7 @@ $field_id = 'field_' . $field['key'];
 			<input type="checkbox" class="tutor-form-toggle-input" checked="">
 			<span class="tutor-form-toggle-control"></span>
 		</label>
-		<button class="tutor-btn tutor-btn-outline-primary tutor-btn-sm tutor-btn-sm"><?php _e("Edit", "tutor"); ?></button>
+		<button class="tutor-btn tutor-btn-outline-primary tutor-btn-sm tutor-btn-sm"><?php _e( 'Edit', 'tutor' ); ?></button>
 		<span class="icon-trash-can-line" area-hidden="true"></span>
 	</div>
 </div>

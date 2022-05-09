@@ -2,25 +2,25 @@
 $tutor_pages = tutor_utils()->tutor_pages();
 ?>
 <div class="tutor-option-main-title">
-	<div class="tutor-fs-4 tutor-fw-medium tutor-color-black"><?php _e('Tutor Pages','tutor'); ?></div>
+	<div class="tutor-fs-4 tutor-fw-medium tutor-color-black"><?php _e( 'Tutor Pages', 'tutor' ); ?></div>
 </div>
 
-<?php tutor_alert(__('Note: This tool will install all the missing Tutor pages. Pages already defined and set up will not be replaced.', 'tutor'), 'primary'); ?>
+<?php tutor_alert( __( 'Note: This tool will install all the missing Tutor pages. Pages already defined and set up will not be replaced.', 'tutor' ), 'primary' ); ?>
 
 <div class="tutor-option-single-item tutor-mb-32 item-variation-table table-col-3 all-pages">
 	<div class="tutor-option-group-title tutor-mb-16">
-		<div class="tutor-fs-6 tutor-color-muted"><?php _e('All Pages','tutor'); ?></div>
+		<div class="tutor-fs-6 tutor-color-muted"><?php _e( 'All Pages', 'tutor' ); ?></div>
 	</div>
 	<div class="item-wrapper">
 		<div class="tutor-option-field-row">
 			<div class="tutor-option-field-label">
-				<?php _e('ID','tutor'); ?>
+				<?php _e( 'ID', 'tutor' ); ?>
 			</div>
 			<div class="tutor-option-field-label">
-				<?php _e('Page Name','tutor'); ?>
+				<?php _e( 'Page Name', 'tutor' ); ?>
 			</div>
 			<div class="tutor-option-field-label">
-				<?php _e('Status','tutor'); ?>
+				<?php _e( 'Status', 'tutor' ); ?>
 			</div>
 		</div>
 		<?php
@@ -43,7 +43,7 @@ $tutor_pages = tutor_utils()->tutor_pages();
 				</div>
 			</div>
 			<div class="tutor-option-field-label">
-				<?php if($page['page_exists'] && $page['page_visible']) : ?>
+				<?php if ( $page['page_exists'] && $page['page_visible'] ) : ?>
 					<?php $page = get_post( $page_id ); ?>
 					<div class="tutor-d-flex tutor-align-center">
 						<span class='tutor-icon-circle-mark tutor-color-success'></span>

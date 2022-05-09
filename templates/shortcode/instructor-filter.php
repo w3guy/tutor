@@ -24,26 +24,28 @@ if ( $total_categories && $total_categories > $limit ) {
 $columns = tutor_utils()->get_option( 'courses_col_per_row', 3 );
 ?>
 
-<div class="tutor-wrap tutor-wrap-parent tutor-instructors" tutor-instructors <?php
-	foreach ( $attributes as $key => $value )  {
-		if ( is_array( $value ) ) {
-			continue;
-		}
-		echo 'data-' . $key . '="' . $value . '" ';
+<div class="tutor-instructors" tutor-instructors 
+<?php
+foreach ( $attributes as $key => $value ) {
+	if ( is_array( $value ) ) {
+		continue;
 	}
-?>>
+	echo 'data-' . $key . '="' . $value . '" ';
+}
+?>
+>
 	<div class="tutor-row">
 		<aside class="tutor-col-lg-3 tutor-mb-32 tutor-mb-lg-0" tutor-instructors-filters>
 			<div class="tutor-d-flex tutor-align-center">
 				<div>
 					<span class="tutor-icon-slider-vertical tutor-color-primary tutor-mr-8" area-hidden="true"></span>
-					<span class="tutor-fs-5 tutor-fw-medium tutor-color-black"><?php _e("Filters", "tutor"); ?></span>
+					<span class="tutor-fs-5 tutor-fw-medium tutor-color-black"><?php _e( 'Filters', 'tutor' ); ?></span>
 				</div>
 
 				<div class="tutor-ml-32">
 					<a href="#" class="tutor-btn tutor-btn-ghost" tutor-instructors-filter-clear>
 						<span class="tutor-icon-times tutor-mr-8" area-hidden="true"></span>
-						<span class="tutor-fw-medium"><?php _e("Clear", "tutor"); ?></span>
+						<span class="tutor-fw-medium"><?php _e( 'Clear', 'tutor' ); ?></span>
 					</a>
 				</div>
 			</div>
@@ -54,7 +56,7 @@ $columns = tutor_utils()->get_option( 'courses_col_per_row', 3 );
 				</h3>
 
 				<div class="tutor-widget-content">
-					<div class="<?php echo $show_more ? 'tutor-toggle-more-content tutor-toggle-more-collapsed' : '' ?>"<?php echo $show_more ? ' data-tutor-toggle-more-content data-toggle-height="200" style="height: 200px;"' : '' ?>>
+					<div class="<?php echo $show_more ? 'tutor-toggle-more-content tutor-toggle-more-collapsed' : ''; ?>"<?php echo $show_more ? ' data-tutor-toggle-more-content data-toggle-height="200" style="height: 200px;"' : ''; ?>>
 						<div class="tutor-list" tutor-instructors-filter-category>
 							<?php foreach ( $categories as $category ) : ?>
 								<div class="tutor-list-item">

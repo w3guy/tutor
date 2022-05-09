@@ -6,7 +6,7 @@
 				<form action="" method="post">
 					<div class="tutor-bulk-action-group">
 						<select name="bulk-action" id="tutor-backend-bulk-action">
-							<?php foreach( $data['bulk_actions'] as $k => $v) : ?>
+							<?php foreach ( $data['bulk_actions'] as $k => $v ) : ?>
 								<option value="<?php esc_attr_e( $v['value'] ); ?>">
 									<?php esc_html_e( $v['option'] ); ?>
 								</option>

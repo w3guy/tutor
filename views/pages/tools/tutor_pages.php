@@ -13,39 +13,39 @@ $tutor_pages = tutor_utils()->tutor_pages();
 		</thead>
 		<tbody>
 			<?php
-				foreach ( $tutor_pages as $page ) {
-					$page_id = $page['page_id'];
-					?>
+			foreach ( $tutor_pages as $page ) {
+				$page_id = $page['page_id'];
+				?>
 					<tr>
 						<td><?php echo esc_attr( $page_id ); ?></td>
 						<td>
 							<p>
-								<?php
-									if ( $page['page_exists'] ) {
-										$edit_url = admin_url( "post.php?post={$page_id}&action=edit" );
-										echo '<a href="' . esc_url( $edit_url ) . '" target="_blank">'. $page['page_name'] .'</a>';
-									} else {
-										echo $page['page_name'];
-									}
-								?>
+							<?php
+							if ( $page['page_exists'] ) {
+								$edit_url = admin_url( "post.php?post={$page_id}&action=edit" );
+								echo '<a href="' . esc_url( $edit_url ) . '" target="_blank">' . $page['page_name'] . '</a>';
+							} else {
+								echo $page['page_name'];
+							}
+							?>
 							</p>
 						</td>
 
 						<td>
-							<?php if ( ! $page_id ): ?>
+							<?php if ( ! $page_id ) : ?>
 								<p style="color: red;">
 									<i class="dashicons dashicons-warning"></i> <?php _e( ' Page not set', 'tutor' ); ?>
 								</p>
 							<?php endif; ?>
 
-							<?php if ( ! $page['page_exists'] ): ?>
+							<?php if ( ! $page['page_exists'] ) : ?>
 								<p style="color: red;">
 									<i class="dashicons dashicons-warning"></i>
 									<?php _e( ' Page deleted, please set new one', 'tutor' ); ?>
 								</p>
 							<?php endif; ?>
 
-							<?php if ( $page['page_exists'] && ! $page['page_visible'] ): ?>
+							<?php if ( $page['page_exists'] && ! $page['page_visible'] ) : ?>
 								<p style="color: red;">
 									<i class="dashicons dashicons-warning"></i>
 									<?php _e( 'Page visibility is not public', 'tutor' ); ?>
@@ -53,44 +53,45 @@ $tutor_pages = tutor_utils()->tutor_pages();
 							<?php endif; ?>
 
 							<?php
-								if ( $page['page_exists'] && $page['page_visible'] ) {
-									$page = get_post( $page_id );
-									echo '<a href="' . get_permalink( $page ) . '" target="_blank" style="color: green;"> 
+							if ( $page['page_exists'] && $page['page_visible'] ) {
+								$page = get_post( $page_id );
+								echo '<a href="' . get_permalink( $page ) . '" target="_blank" style="color: green;"> 
 											<i class="dashicons dashicons-yes-alt"></i> /' . esc_attr( $page->post_name ) . ' 
 										</a>';
-								}
+							}
 							?>
 						</td>
 					</tr>
 				<?php
 			}
 			?>
-            <tr>
-                <td><?php echo $page_id; ?></td>
-                <td>
+			<tr>
+				<td><?php echo $page_id; ?></td>
+				<td>
 					<?php
-					echo "<p>";
+					echo '<p>';
 
-					if ($page['page_exists']){
-						$edit_url = admin_url("post.php?post={$page_id}&action=edit");
+					if ( $page['page_exists'] ) {
+						$edit_url = admin_url( "post.php?post={$page_id}&action=edit" );
 						echo "<a href='{$edit_url}' target='_blank'>";
 					}
 					echo $page['page_name'];
 
-					if ($page['page_exists']){
+					if ( $page['page_exists'] ) {
 						echo '</a>';
 					}
-					echo "</p>";
+					echo '</p>';
 					?>
-                </td>
+				</td>
 
-                <td>
-                    <?php
-                    if ( ! $page_id ){
-	                    echo '<p style="color: red;">';
-	                    echo "<i class='dashicons dashicons-warning'></i> "; _e(' Page not set', 'tutor');
-	                    echo '</p>';
-                    }
+				<td>
+					<?php
+					if ( ! $page_id ) {
+						echo '<p style="color: red;">';
+						echo "<i class='dashicons dashicons-warning'></i> ";
+						_e( ' Page not set', 'tutor' );
+						echo '</p>';
+					}
 					?>
 
 					<form action="" method="post">
@@ -100,7 +101,7 @@ $tutor_pages = tutor_utils()->tutor_pages();
 						?>
 
 						<p>
-							<button class="tutor-btn" type="submit"><?php _e('Re-Generate Tutor Pages','tutor'); ?></button>
+							<button class="tutor-btn" type="submit"><?php _e( 'Re-Generate Tutor Pages', 'tutor' ); ?></button>
 						</p>
 					</form>
 				</td>

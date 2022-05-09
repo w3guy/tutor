@@ -1,8 +1,8 @@
 <?php
 /**
-* @package TutorLMS/Templates
-* @version 1.4.3
-*/
+ * @package TutorLMS/Templates
+ * @version 1.4.3
+ */
 ?>
 
 <form method="post" enctype="multipart/form-data" id="tutor-instructor-application-form">

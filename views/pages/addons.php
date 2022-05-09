@@ -1,5 +1,5 @@
 <?php
-$current_page = tutor_utils()->avalue_dot( 'tab', tutor_sanitize_data($_GET) );
+$current_page = tutor_utils()->avalue_dot( 'tab', tutor_sanitize_data( $_GET ) );
 $page_name    = $current_page ? $current_page : 'addons';
 ?>
 
@@ -75,9 +75,9 @@ $page_name    = $current_page ? $current_page : 'addons';
 								</div>
 								<div class="plugin-card-bottom">
 									<?php
-										if ( $addon->version ) {
-											echo '<div class="plugin-version tutor-d-inline-block"> ' . __( 'Version', 'tutor' ) . ' : ' . esc_attr( $addon->version ) . '</div>';
-										}
+									if ( $addon->version ) {
+										echo '<div class="plugin-version tutor-d-inline-block"> ' . __( 'Version', 'tutor' ) . ' : ' . esc_attr( $addon->version ) . '</div>';
+									}
 									?>
 								</div>
 							</div>

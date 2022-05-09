@@ -1,5 +1,4 @@
-<?php
-?><label class="tutor-form-toggle">
+<label class="tutor-form-toggle">
 	<span class="label-before">
 		<?php esc_html_e( 'Logged Only', 'tutor' ); ?>
 	</span>

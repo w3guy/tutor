@@ -13,4 +13,5 @@
 ?>
 
 
-<?php tutor_utils()->tutor_empty_state( 'No Course Found', 'tutor' ); ?>
+<?php
+tutor_utils()->tutor_empty_state( 'No Course Found', 'tutor' );

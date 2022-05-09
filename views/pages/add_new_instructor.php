@@ -12,13 +12,13 @@
 
 		<?php
 			$errors = apply_filters( 'tutor_instructor_register_validation_errors', array() );
-			if ( is_array( $errors ) && count( $errors ) ) {
-				echo '<div class="tutor-alert-warning"><ul class="tutor-required-fields">';
-				foreach ( $errors as $error_key => $error_value ) {
-					echo '<li>' . $error_value . '</li>';
-				}
-				echo '</ul></div>';
+		if ( is_array( $errors ) && count( $errors ) ) {
+			echo '<div class="tutor-alert-warning"><ul class="tutor-required-fields">';
+			foreach ( $errors as $error_key => $error_value ) {
+				echo '<li>' . $error_value . '</li>';
 			}
+			echo '</ul></div>';
+		}
 		?>
 
 		<?php do_action( 'tutor_add_new_instructor_form_fields_before' ); ?>

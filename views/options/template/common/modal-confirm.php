@@ -44,7 +44,7 @@
 
 					<div class="tutor-d-flex tutor-justify-center tutor-mt-48 tutor-mb-24">
 						<button class="tutor-btn tutor-btn-outline-primary" data-tutor-modal-close>
-							<?php esc_html_e('Cancel', 'tutor'); ?>
+							<?php esc_html_e( 'Cancel', 'tutor' ); ?>
 						</button>
 						<button class="reset_to_default tutor-btn tutor-btn-primary tutor-ml-20" data-reset-for="Null" data-reset="Null">
 							<?php echo esc_attr( 'Reset' ); ?>

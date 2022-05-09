@@ -1,5 +1,5 @@
 <?php
-	$filter_object = new \TUTOR\Course_Filter();
+	$filter_object = new \Tutor\Classes\CourseFilter();
 
 	$filter_prices = array(
 		'free' => __( 'Free', 'tutor' ),
@@ -9,8 +9,8 @@
 	$course_levels     = tutor_utils()->course_levels();
 	$supported_filters = tutor_utils()->get_option( 'supported_course_filters', array() );
 	$supported_filters = array_keys( $supported_filters );
-	$reset_link		   = remove_query_arg( $supported_filters, get_pagenum_link() );
-?>
+	$reset_link        = remove_query_arg( $supported_filters, get_pagenum_link() );
+	?>
 <form class="tutor-form">
 	<?php do_action( 'tutor_course_filter/before' ); ?>
 
@@ -61,15 +61,15 @@
 				<ul class="tutor-list">
 				<?php
 					$key = '';
-					foreach ( $course_levels as  $value => $title ) :
+				foreach ( $course_levels as  $value => $title ) :
 					if ( $key == 'all_levels' ) {
 						continue;
 					}
-				?>
+					?>
 					<li class="tutor-list-item">
 						<label>
 							<input type="checkbox" class="tutor-form-check-input" id="<?php echo esc_html( $value ); ?>" name="tutor-course-filter-level" value="<?php echo esc_html( $value ); ?>"/>
-							<?php esc_html_e( $title ); ?>
+						<?php esc_html_e( $title ); ?>
 						</label>
 					</li>
 				<?php endforeach; ?>
@@ -80,16 +80,16 @@
 
 	<?php
 		$is_membership = get_tutor_option( 'monetize_by' ) == 'pmpro' && tutor_utils()->has_pmpro();
-		if ( ! $is_membership && in_array( 'price_type', $supported_filters ) ) :
-	?>
+	if ( ! $is_membership && in_array( 'price_type', $supported_filters ) ) :
+		?>
 	<div class="tutor-widget tutor-widget-course-price tutor-mt-48">
 		<h3 class="tutor-widget-title">
-			<?php _e( 'Price', 'tutor' ); ?>
+		<?php _e( 'Price', 'tutor' ); ?>
 		</h3>
 
 		<div class="tutor-widget-content">
 			<ul class="tutor-list">
-			<?php foreach ( $filter_prices as $value => $title ) : ?>
+		<?php foreach ( $filter_prices as $value => $title ) : ?>
 				<div class="tutor-list-item">
 					<label>
 						<input type="checkbox" class="tutor-form-check-input" id="<?php echo esc_html( $value ); ?>" name="tutor-course-filter-price" value="<?php echo esc_html( $value ); ?>"/>
@@ -102,7 +102,7 @@
 	</div>
 	<?php endif; ?>
 
-	<div class="tutor-widget tutor-widget-course-filter tutor-mt-32">
+	<div class="tutor-widget tutor-widget-course-filter tutor-mt-32 tutor-d-none">
 		<div class="tutor-widget-content">
 			<a href="#" class="tutor-btn tutor-btn-outline-primary tutor-btn-sm" onclick="window.location.replace('<?php echo $reset_link; ?>')" action-tutor-clear-filter>
 				<i class="tutor-icon-times tutor-mr-8"></i> <?php esc_html_e( 'Clear All Filters', 'tutor' ); ?>

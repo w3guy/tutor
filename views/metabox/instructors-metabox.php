@@ -16,7 +16,7 @@
 				}
 				?>
 				<div id="added-instructor-id-<?php echo esc_attr( $instructor->ID ); ?>" class="added-instructor-item added-instructor-item-<?php echo esc_attr( $instructor->ID ); ?>" data-instructor-id="<?php echo esc_attr( $instructor->ID ); ?>">
-					<?php echo tutor_utils()->get_tutor_avatar($instructor->ID, 'md'); ?>
+					<?php echo tutor_utils()->get_tutor_avatar( $instructor->ID, 'md' ); ?>
 					<span class="instructor-name tutor-ml-12"> <?php echo esc_attr( $instructor->display_name ) . ' ' . $authorTag; ?> </span>
 					<span class="instructor-control">
 						<a href="javascript:;" class="tutor-instructor-delete-btn tutor-iconic-btn">

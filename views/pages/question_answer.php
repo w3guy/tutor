@@ -1,47 +1,12 @@
 <?php
-	/**
-	 * @package @TUTOR
-	 * @since v.1.0.0
-	 */
+/**
+ * @package tutor
+ * @since v.1.0.0
+ */
 
-	use TUTOR\Input;
-	
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit;
-	}
-	
-	if ( Input::has( 'question_id' ) ){
-		tutor_load_template_from_custom_path(tutor()->path . '/views/qna/qna-single.php', array(
-			'question_id' 	=> Input::get( 'question_id' ),
-			'context' 		=> 'backend-dashboard-qna-single'
-		));
-		return;
-	}
-
-	$qna_object = new \TUTOR\Question_Answers_List(false);
-	$qna = $qna_object->get_items($_GET);
-	$qna_list = $qna['items'];
-	$qna_pagination = $qna['pagination'];
-
-	$filters = array(
-		'bulk_action'   => true,
-		'bulk_actions'  => $qna_object->get_bulk_actions(),
-		'ajax_action'   => 'tutor_qna_bulk_action',
-		'filters'       => true,
-		'course_filter' => true,
-	);
-
-	/**
-	 * Determine active tab
-	 */
-
-	$active_tab =  Input::get( 'tab', 'all' );
-
-	$navbar_data = array(
-		'page_title' => __('Question & Answer', 'tutor'),
-		'tabs'       => \Tutor\Q_and_A::tabs_key_value(),
-		'active'     => $active_tab,
-	);
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <div class="tutor-admin-wrap">
@@ -57,12 +22,15 @@
 	<div class="tutor-admin-body">
 		<div class="tutor-mt-24">
 			<?php
-				tutor_load_template_from_custom_path(tutor()->path . '/views/qna/qna-table.php', array(
-					'qna_list' => $qna_list,
-					'context' => 'backend-dashboard-qna-table',
-					'qna_pagination' => $qna_pagination
-				));
-			?>
+				tutor_load_template_from_custom_path(
+					tutor()->path . '/views/qna/qna-table.php',
+					array(
+						'qna_list'       => $qna_list,
+						'context'        => 'backend-dashboard-qna-table',
+						'qna_pagination' => $qna_pagination,
+					)
+				);
+				?>
 		</div>
 	</div>
 </div>
