@@ -25,6 +25,11 @@ function tutor_tinymce_plugin_translation() {
         'order_by'                      => _x( 'Order By :', 'tinyMCE button order by', 'tutor' ),
         'order'                         => __( 'Order :', 'tinyMCE button order', 'tutor' ),
         'count'                         => __( 'Count', 'tutor' ),
+        'tutor_iframe'                  => __( 'Tutor IFrame', 'tutor' ),
+        'iframe'                        => __( 'IFrame', 'tutor' ),
+        'url'                           => __( 'URL', 'tutor' ),
+        'width'                         => __( 'Width', 'tutor' ),
+        'height'                        => __( 'Height', 'tutor' ),
     );
 
     $locale = _WP_Editors::$mce_locale;

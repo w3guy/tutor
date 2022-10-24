@@ -87,6 +87,7 @@ class Assets {
 			'site_title'                   => get_bloginfo( 'title' ),
 			'base_path'                    => tutor()->basepath,
 			'tutor_url'                    => tutor()->url,
+			'has_pro'					   => tutor()->has_pro,
 			'tutor_pro_url'                => function_exists( 'tutor_pro' ) ? tutor_pro()->url : null,
 			'nonce_key'                    => tutor()->nonce,
 			tutor()->nonce                 => wp_create_nonce( tutor()->nonce_action ),
