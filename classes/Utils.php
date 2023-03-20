@@ -10,6 +10,7 @@
 
 namespace TUTOR;
 
+use Tutor\Cache\TutorCache;
 use Tutor\Helpers\QueryHelper;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1102,7 +1103,7 @@ class Utils {
 
 		do_action( 'tutor_is_enrolled_before', $course_id, $user_id );
 
-		$get_enrolled_info = wp_cache_get( $cache_key );
+		$get_enrolled_info = TutorCache::get( $cache_key );
 		if ( false === $get_enrolled_info ) {
 			$get_enrolled_info = $wpdb->get_row(
 				$wpdb->prepare(
@@ -1125,7 +1126,7 @@ class Utils {
 					'completed'
 				)
 			);
-			wp_cache_set( $cache_key, $get_enrolled_info );
+			TutorCache::set( $cache_key, $get_enrolled_info );
 		}
 
 		if ( $get_enrolled_info ) {
