@@ -37,8 +37,6 @@ final class TutorCache {
 	private function __construct(){}
 	// Prevent to clone instance
 	private function __clone(){}
-	// Prevent to de-serializing
-	private function __wakeup(){}
 
 	/**
 	 * Get the current class instance.
@@ -90,7 +88,7 @@ final class TutorCache {
 			return false;
 		}
 
-		if ( isset( $instance->data[ $key ] ) ) {
+		if ( array_key_exists( $key, $instance->data ) ) {
 			return $instance->data[ $key ];
 		}
 
