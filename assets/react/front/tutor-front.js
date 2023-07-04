@@ -5,6 +5,7 @@ import './dashboard/export-csv';
 import './pages/course-landing';
 import './pages/instructor-list-filter';
 import './_select_dd_search';
+import './pages/course-details';
 /**
  * Codes from this file should be decentralized according to relavent file/folder structure.
  * It's a legacy file.
